@@ -1,0 +1,49 @@
+import { isAbsolute } from 'path';
+import postcss, { PluginInitializer, Result, Root } from 'postcss';
+import { eject } from './eject';
+import { defaultOptions, Options } from './options';
+import { createStringify } from './stringify';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import postcssModules from 'postcss-modules';
+
+/**
+ * Postcss to es module plugin.
+ * @internal
+ */
+export const plugin = (options: Options = {}): PluginInitializer<Options> => {
+    // prepare options
+    const opts = {
+        modules: {...defaultOptions.modules, ...options.modules},
+        loader: {...defaultOptions.loader, ...options.loader}
+    };
+    // validate options
+    if (options.loader?.script === 'eject') {
+        if (!options.loader.scriptEjectPath) {
+            throw 'The \'eject\' loader.script options requires also to set loader.scriptEjectPath.' +
+            'Please provide the path where the loader have to be ejected.';
+        } else if(!isAbsolute(options.loader.scriptEjectPath)) {
+            throw 'The loader.scriptEjectPath has to be absolute path.';
+        } else {
+            eject(opts);
+        }
+    }
+
+    // return plugin body
+    return (async (css: Root, result: Result) => {
+        // if no opts, create them
+        if (!result.opts) {
+            result.opts = {};
+        }
+        // set custom stringifier
+        result.opts.stringifier = createStringify(opts)
+        // process css by the postcss-modules
+        await postcss(postcssModules({
+            ...options.modules,
+            getJSON: (cssFileName: string, map: Record<string, string>) => {
+                // so we are adding the comment with modules map
+                css.append(postcss.comment({text: 'modules-map:' + JSON.stringify(map)}));
+            }
+        })).process(css, { from: result.opts.from });
+    }) as any;
+};

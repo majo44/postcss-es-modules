@@ -1,0 +1,109 @@
+{
+    "name": "css-es-modules",
+    "version": "0.1.0",
+    "description": "Universal styles injection to work with postcss-es-modules",
+    "keywords": [
+        "css-in-js",
+        "css modules"
+    ],
+    "bugs": {
+        "url": "https://github.com/majo44/postcss-es-modules/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/majo44/postcss-es-modules.git"
+    },
+    "license": "MIT",
+    "author": {
+        "name": "Paweł Majewski",
+        "email": "majo44@gmail.com"
+    },
+    "sideEffects": false,
+    "main": "./dist/dist-cjs/index.js",
+    "module": "./dist/dist-esm/index.js",
+    "types": "./dist/dist-types/index.d.ts",
+    "files": [
+        "dist",
+        "src"
+    ],
+    "scripts": {
+        "api": "api-extractor run --local && api-documenter markdown -i ./temp -o ../../docs/api",
+        "api:update": "yarn compile:cjs && yarn api",
+        "build": "yarn clean && yarn lint && yarn compile",
+        "clean": "rimraf dist coverage",
+        "compile": "yarn compile:cjs && yarn compile:esm",
+        "compile:cjs": "tsc --outDir dist/dist-cjs --module CommonJS",
+        "compile:esm": "tsc --outDir dist/dist-esm --module ESNext",
+        "lint": "eslint ./**/*.ts --fix",
+        "prepublishOnly": "yarn build",
+        "readme": "yarn readme1 && yarn readme2",
+        "readme1": "copyfiles ../../docs/README.md ../../ -f && replace-in-files --string=\"](./\" --replacement=\"](./docs/\" README.md",
+        "readme2": "copyfiles ../../docs/README.md ./ -f",
+        "test": "ts-mocha -p tsconfig.test.json src/**/*.spec.ts",
+        "test:coverage": "nyc yarn test",
+        "test:watch": "ts-mocha --watch -p tsconfig.test.json src/**/*.spec.ts"
+    },
+    "eslintConfig": {
+        "parser": "@typescript-eslint/parser",
+        "plugins": [
+            "@typescript-eslint",
+            "eslint-plugin-tsdoc"
+        ],
+        "extends": [
+            "eslint:recommended",
+            "plugin:@typescript-eslint/recommended"
+        ],
+        "rules": {
+            "tsdoc/syntax": "error"
+        }
+    },
+    "mocha": {
+        "watchFiles": [
+            "test/**/*.ts",
+            "src/**/*.ts"
+        ]
+    },
+    "nyc": {
+        "all": true,
+        "branches": 1,
+        "check-coverage": true,
+        "exclude": [
+            "src/**/__mock__/*",
+            "src/**/*.spec.ts"
+        ],
+        "extension": [
+            ".ts"
+        ],
+        "functions": 1,
+        "include": [
+            "src/**/*.ts"
+        ],
+        "lines": 1,
+        "reporter": [
+            "text-summary",
+            "html",
+            "lcovonly"
+        ],
+        "statements": 1
+    },
+    "devDependencies": {
+        "@types/node": "^14.14.22",
+        "tslib": "^2.1.0",
+        "@microsoft/api-documenter": "^7.12.1",
+        "@microsoft/api-extractor": "^7.12.1",
+        "@types/chai": "^4.2.14",
+        "@types/mocha": "^8.2.0",
+        "@typescript-eslint/eslint-plugin": "^4.11.1",
+        "@typescript-eslint/parser": "^4.11.1",
+        "nyc": "^15.1.0",
+        "eslint": "^7.16.0",
+        "eslint-plugin-tsdoc": "^0.2.10",
+        "chai": "^4.2.0",
+        "copyfiles": "^2.4.1",
+        "mocha": "^8.2.1",
+        "replace-in-files-cli": "^1.0.0",
+        "rimraf": "^3.0.2",
+        "ts-mocha": "^8.0.0",
+        "typescript": "^4.1.3"
+    }
+}
