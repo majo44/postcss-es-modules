@@ -48,20 +48,30 @@ export interface ModulesOptions {
  */
 export interface ExtendedStylesInjectOptions extends StylesInjectOptions {
     /**
-     * Generated modules type.
+     * Generated code modules type.
      * Options:
-     *  - 'esm': ecmascript 6 modules
-     *  - 'cjs': commonjs
+     *  - 'esm' - ecmascript 6 modules
+     *  - 'cjs' - commonjs
      *
      * Default 'esm'
      */
     moduleType?: 'esm' | 'cjs';
     /**
-     * The way how the loader script will be referred from the generated source.
+     * The mode of the styles injection.
      * Options:
-     *  - 'embed': embedding loader script in the target source
-     *  - 'eject': the loader script will be ejected to the provided scriptEjectPath
-     *  - 'import': the loader script will be referred by the import statement
+     *  - `lazy` - the stylesheet will be injected on the first use of the style class name within the code
+     *  - `ondemand` - the stylesheet will be injected only when the `styles.inject()` method will be called
+     *  - `instant` -  the stylesheet will be injected on the module load
+     *  - `none` -  the stylesheet will be never injected, to inject it to the DOM you will need to import css content
+     * Default: 'lazy'
+     */
+    injectMode?: 'lazy' | 'ondemand' | 'instant' | 'none';
+    /**
+     * The way how the styles injector script will be referred from the generated source.
+     * Options:
+     *  - `embed`: embedding loader script in the target source
+     *  - `eject`: the loader script will be ejected to the provided scriptEjectPath
+     *  - `import`: the loader script will be referred by the import statement
      *
      *  Default: 'import'
      */
@@ -69,8 +79,8 @@ export interface ExtendedStylesInjectOptions extends StylesInjectOptions {
     /**
      * The script type.
      * Options:
-     *  - 'ts': typescript
-     *  - 'js': javascript
+     *  - `ts`: typescript
+     *  - `js`: javascript
      *
      *  Default: 'js'
      */
@@ -80,6 +90,24 @@ export interface ExtendedStylesInjectOptions extends StylesInjectOptions {
      * value is set for the script type.
      */
     scriptEjectPath?: string,
+    /**
+     * Custom injection script. Use this property to use custom styles to DOM/Node injection.
+     */
+    custom?: {
+        /**
+         * The statement for import required dependencies.
+         * Eg: "import  injectMyStyles  from 'somelib';
+         */
+        importStatement: string;
+        /**
+         * The statement for executing the injection.
+         * There are available two constants in the context:
+         * - css - the raw css code
+         * - key - unique key of the stylesheet
+         * Eg: "injectMyStyles(css)"
+         */
+        injectStatement: string;
+    }
 }
 
 /**
@@ -92,9 +120,9 @@ export interface Options {
      */
     modules?: ModulesOptions;
     /**
-     * Css loader configuration.
+     * Css injection configuration.
      */
-    loader?: ExtendedStylesInjectOptions;
+    inject?: ExtendedStylesInjectOptions;
 }
 
 /**
@@ -102,11 +130,12 @@ export interface Options {
  * @internal
  */
 export const defaultOptions = {
-    loader: {
+    inject: {
         ...defaultStylesInjectOptions,
         moduleType: 'esm',
         script: 'import',
-        scriptType: 'js'
+        scriptType: 'js',
+        injectMode: 'lazy',
     },
     modules: {}
 } as const;

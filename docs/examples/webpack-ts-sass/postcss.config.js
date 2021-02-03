@@ -1,11 +1,12 @@
 const { postcssEsModules }  = require('postcss-es-modules');
+const postCssSass = require('@csstools/postcss-sass');
 
-module.exports = (ctx) => ({
+module.exports = () => ({
     plugins: [
+        postCssSass(),
         postcssEsModules({
             inject: {
-                script: "eject",
-                scriptEjectPath: __dirname + "/src/styles-inject"
+                scriptType: 'ts'
             }
         }),
     ]

@@ -12,23 +12,23 @@ export const eject = async (options: Required<Options>): Promise<void> => {
     // resolving path to sources
     const codeBasePath = require.resolve('css-es-modules');
     // determine the extension
-    const extension = options.loader.scriptType === 'ts'
+    const extension = options.inject.scriptType === 'ts'
         ? '.ts'
         : '.js';
     // determine source to eject
-    const codePath = options.loader.scriptType === 'ts'
+    const codePath = options.inject.scriptType === 'ts'
         ? join(codeBasePath, '../../../src')
-        : options.loader.moduleType === 'esm'
+        : options.inject.moduleType === 'esm'
             ? join(codeBasePath, '../../dist-esm')
             : join(codeBasePath, '../../dist-cjs');
     // if we know where to eject and we are not during the ejection
-    if (options.loader.scriptEjectPath && !isEjecting) {
+    if (options.inject.scriptEjectPath && !isEjecting) {
         isEjecting = true;
         try {
-            const injectCodePath = join(options.loader.scriptEjectPath, `inject-styles${extension}`);
-            const collectCodePath = join(options.loader.scriptEjectPath,  `collect-styles${extension}`);
+            const injectCodePath = join(options.inject.scriptEjectPath, `inject-styles${extension}`);
+            const collectCodePath = join(options.inject.scriptEjectPath,  `collect-styles${extension}`);
             // create directories
-            await promises.mkdir(options.loader.scriptEjectPath, {recursive: true});
+            await promises.mkdir(options.inject.scriptEjectPath, {recursive: true});
             // if not exist
             if (!existsSync(injectCodePath)) {
                 // copy the inject-styles code

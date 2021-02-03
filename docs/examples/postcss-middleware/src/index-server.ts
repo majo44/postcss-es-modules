@@ -27,7 +27,7 @@ app.use('*.scss', postcssMiddleware({
         postcssSass(),
         // css -> js
         // we will embed the styles loader
-        postcssEsModules({ loader: { script: 'embed', useNodeGlobal: false} }),
+        postcssEsModules({ inject: { script: 'embed'} }),
     ]
 }))
 

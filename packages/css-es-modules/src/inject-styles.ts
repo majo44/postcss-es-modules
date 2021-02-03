@@ -52,7 +52,8 @@ export interface StylesInjectOptions {
      */
     useNounce?: string;
     /**
-     * Enable Constructable Stylesheet method of the styles injection to the document.
+     * Use Constructable Stylesheet method of the styles injection to DOM if the browser supports
+     * Constructable Stylesheet.
      * Default true.
      */
     useConstructableStylesheet?: boolean;

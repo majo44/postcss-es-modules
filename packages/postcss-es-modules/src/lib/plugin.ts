@@ -15,14 +15,14 @@ export const plugin = (options: Options = {}): PluginInitializer<Options> => {
     // prepare options
     const opts = {
         modules: {...defaultOptions.modules, ...options.modules},
-        loader: {...defaultOptions.loader, ...options.loader}
+        inject: {...defaultOptions.inject, ...options.inject}
     };
     // validate options
-    if (options.loader?.script === 'eject') {
-        if (!options.loader.scriptEjectPath) {
+    if (options.inject?.script === 'eject') {
+        if (!options.inject.scriptEjectPath) {
             throw 'The \'eject\' loader.script options requires also to set loader.scriptEjectPath.' +
             'Please provide the path where the loader have to be ejected.';
-        } else if(!isAbsolute(options.loader.scriptEjectPath)) {
+        } else if(!isAbsolute(options.inject.scriptEjectPath)) {
             throw 'The loader.scriptEjectPath has to be absolute path.';
         } else {
             eject(opts);
