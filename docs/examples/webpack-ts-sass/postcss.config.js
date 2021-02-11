@@ -6,7 +6,8 @@ module.exports = () => ({
         postCssSass(),
         postcssEsModules({
             inject: {
-                scriptType: 'ts'
+                scriptType: 'ts',
+                useConstructableStylesheet: false
             }
         }),
     ]

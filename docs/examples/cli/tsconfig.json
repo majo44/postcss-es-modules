@@ -2,7 +2,6 @@
     "compilerOptions": {
         "target": "ES5",
         "module": "ESNext",
-        "declarationDir": "dist/dist-types",
         "moduleResolution": "Node",
         "esModuleInterop": true,
         "sourceMap": true,
@@ -10,20 +9,18 @@
         "declaration": true,
         "declarationMap": true,
         "experimentalDecorators": true,
+        "importHelpers": true,
+        "noEmitHelpers": true,
         "isolatedModules": true,
         "resolveJsonModule": true,
         "allowJs": true,
         "rootDir": "src",
         "baseUrl": "src"
     },
-    "exclude": [
-        "src/**/*.spec.ts"
-    ],
     "include": [
         "src"
     ],
     "ts-node": {
-        "transpileOnly": true,
         "compilerOptions": {
             "module": "CommonJS"
         }

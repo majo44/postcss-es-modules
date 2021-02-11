@@ -5,5 +5,8 @@
     "workspaces": [
         "packages/*",
         "docs/examples/*"
-    ]
+    ],
+    "scripts": {
+        "build": "yarn workspaces run build"
+    }
 }

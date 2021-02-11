@@ -1,5 +1,9 @@
 import { Builder, Root } from 'postcss';
 
+function getResolvedClassName(classMap: Record<string, string>, className: string, attachOriginalClassName: boolean) {
+    return `${classMap[className]} ${attachOriginalClassName ? `${className} ` : ''}`;
+}
+
 /**
  * Build the styles statement with lazy loading.
  */
@@ -19,10 +23,8 @@ export const buildLazyStylesStatement = (
     // styles class names map
     Object.keys(classMap).forEach((className) => {
         if (classMap?.[className]) {
-            const resolvedClassName =
-                `${classMap[className]}${attachOriginalClassName ? ` ${className}` : ''}`;
             builder(`    get ['${className}']() { ${injectStatement} `
-                + ` return '${resolvedClassName}'; },\n`, node);
+                + ` return '${getResolvedClassName(classMap, className, attachOriginalClassName)}'; },\n`, node);
         }
     });
     // inject method
@@ -30,6 +32,7 @@ export const buildLazyStylesStatement = (
     builder(`};\n`, node);
 
 };
+
 /**
  * Build the styles statement with on demand style loading.
  */
@@ -49,8 +52,7 @@ export const buildOnDemandStylesStatement = (
     // styles class names map
     Object.keys(classMap).forEach((className) => {
         if (classMap?.[className]) {
-            const resolvedClassName = `${classMap[className]}${attachOriginalClassName ? ` ${className}` : ''}`;
-            builder(`    ['${className}']: '${resolvedClassName}',\n`, node);
+            builder(`    ['${className}']: '${getResolvedClassName(classMap, className, attachOriginalClassName)}',\n`, node);
         }
     });
     // inject method

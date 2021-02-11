@@ -24,12 +24,9 @@ declare global {
 /**
  * Is node.js current env.
  */
-const isNode = typeof global === 'object' && (typeof window === 'undefined' || global !== window as any);
-
-/**
- * Cached header element.
- */
-let headElement: HTMLHeadElement | null;
+const isNode = typeof global === 'object' && (typeof window === 'undefined' ||
+    /* istanbul ignore next */
+    global !== window as any);
 
 /**
  * Global styles shared context property name.
@@ -37,7 +34,7 @@ let headElement: HTMLHeadElement | null;
  */
 export const CSS_GLOBAL_KEY = '$CSS$IN$JS$GLOBALS$';
 /**
- * Global styles shared context property name.
+ * Local styles shared context property name.
  * @public
  */
 export const CSS_LOCALS_KEY = '$CSS$IN$JS$LOCALS$';
@@ -77,7 +74,8 @@ export interface StylesInjectOptions {
  */
 export const defaultStylesInjectOptions: StylesInjectOptions = {
     useConstructableStylesheet: true,
-    useNodeGlobal: true
+    useNodeGlobal: true,
+    useStyleTag: true,
 }
 
 /**
@@ -86,11 +84,13 @@ export const defaultStylesInjectOptions: StylesInjectOptions = {
  * @param stylesheetKey - the unique stylesheet key
  * @param stylesheetBody - the stylesheet body
  * @param options - inject options
+ * @param serverSide - force server/client approach
  */
 export function injectStyles(
     stylesheetKey: string,
     stylesheetBody: string,
-    options?: StylesInjectOptions
+    options?: StylesInjectOptions,
+    serverSide: boolean = isNode
 ): void {
     // prepare options
     const { useNodeGlobal, useConstructableStylesheet, useStyleTag, useNounce } = {
@@ -100,13 +100,13 @@ export function injectStyles(
     // if we are on the node.js
     // and node side injection is enabled
     // and style is not already registered globally
-    if (isNode && useNodeGlobal && !global[CSS_GLOBAL_KEY]?.[stylesheetKey]) {
-        if (global[CSS_LOCALS_KEY]
-            && global[CSS_LOCALS_KEY][stylesheetKey] ) {
-            // if there is a local css registry
-            // and style is not already injected locally
-            // injecting to locals registry
-            global[CSS_LOCALS_KEY][stylesheetKey] = stylesheetBody;
+    if (serverSide && useNodeGlobal && !global[CSS_GLOBAL_KEY]?.[stylesheetKey]) {
+        if (global[CSS_LOCALS_KEY]) {
+            if(!global[CSS_LOCALS_KEY][stylesheetKey]) {
+                // if there is a local css registry
+                // injecting to locals registry
+                global[CSS_LOCALS_KEY][stylesheetKey] = stylesheetBody;
+            }
         } else {
             // if there is no local css registry and style is not already injected globally
             // injecting to global registry
@@ -119,7 +119,7 @@ export function injectStyles(
     // if we are on the browser side
     // and style is not already registered
     // and client side injection is enabled
-    if (!isNode
+    if (!serverSide
         && !window[CSS_GLOBAL_KEY]?.[stylesheetKey]
         && (useConstructableStylesheet || useStyleTag)) {
         // marking style as injected
@@ -138,10 +138,17 @@ export function injectStyles(
         // if style tag flag is enabled
         if (useStyleTag) {
             // we are injecting stylesheet by styles tag
-            const styleTag = document.createElement('style');
-            useNounce && styleTag.setAttribute('nounce', useNounce);
-            styleTag.appendChild(document.createTextNode(stylesheetBody));
-            (headElement || (headElement = document.querySelector('head')))?.appendChild(styleTag);
+            const styleElement: HTMLStyleElement = document.createElement('style');
+            useNounce && styleElement.setAttribute('nounce', useNounce);
+            /* istanbul ignore if */
+            if ((styleElement as any).styleSheet) {
+                (styleElement as any).styleSheet.cssText += stylesheetBody
+            } else {
+                styleElement.textContent += stylesheetBody;
+            }
+            (document.head ||
+                /* istanbul ignore next */
+                document.getElementsByTagName('head')).appendChild(styleElement);
         }
     }
 }

@@ -38,7 +38,7 @@ export interface StylesCollector {
  * Start collecting of styles.
  * @public
  */
-export const collectStyles = (): StylesCollector => {
+export function collectStyles(): StylesCollector {
     // prepare new collection for the locals injection
     const collection: Record<string, string> = {};
     typeof global !== 'undefined' && (global[CSS_LOCALS_KEY] = collection);
