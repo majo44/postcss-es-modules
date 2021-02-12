@@ -98,7 +98,7 @@
     },
     "dependencies": {
         "css-es-modules": "1.0.0",
-        "postcss-modules": "^3.2.2",
+        "postcss-modules": "^4.0.0",
         "short-uuid": "^4.1.0",
         "tslib": "^2.1.0"
     },
@@ -131,9 +131,10 @@
         "mock-require": "^3.0.3",
         "@types/mock-require": "^2.0.0",
         "@csstools/postcss-sass": "^4.0.0",
-        "cssnano": "^4.1.10"
+        "cssnano": "^4.1.10",
+        "postcss": "^8.2.6"
     },
     "peerDependencies": {
-        "postcss": "^7.0.35"
+        "postcss": "^8.2.6"
     }
 }

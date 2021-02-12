@@ -6,10 +6,11 @@
         "serve": "ts-node-dev -- src/index-server.ts"
     },
     "dependencies": {
+        "postcss": "^8.2.6",
         "postcss-middleware": "^1.1.4",
+        "css-es-modules": "^0.1.0",
         "express": "^4.17.1",
-        "tslib": "^2.0.3",
-        "css-es-modules": "^0.1.0"
+        "tslib": "^2.1.0"
     },
     "devDependencies": {
         "express-typescript-compile": "0.3.0",
