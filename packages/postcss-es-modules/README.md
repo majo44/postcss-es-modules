@@ -61,7 +61,7 @@ in to the other parts of the application.
 * Framework agnostic  
 * Javascript and Typescript support
 * Server side rendering
-* Lazy, on demand or instant styles injection
+* Lazy, on demand, instant or none styles injection
 * Rich (optional) configuration
 
 ## Installation
@@ -353,6 +353,11 @@ Within the `.src/styles-inject/inject-styles` you will find ejected code of inje
 
 This option can be very useful on the development process.
 
+## Next steps
+For more information please go to the [api reference](./api/index.md) documentation.
+
+## Need a help ?
+If you have any problems, issues, ect. please use [github discussions](https://github.com/majo44/postcss-es-modules/discussions). 
 
 
 
