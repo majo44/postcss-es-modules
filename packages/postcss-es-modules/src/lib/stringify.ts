@@ -22,6 +22,7 @@ export const createStringify = (options: Required<Options>): Stringifier => {
     const runtimeOptions = prepareRuntimeOptions(options);
 
     return (node: Node, builder: Builder) => {
+        /* istanbul ignore else */
         if (node.type === 'root') {
             let classMap: Record<string, string> | undefined;
             // looking for module-map comment
@@ -32,6 +33,7 @@ export const createStringify = (options: Required<Options>): Stringifier => {
                 }
             });
             // we handling only roots which contains module-map
+            /* istanbul ignore else */
             if (classMap) {
                 // generate stylesheet unique key
                 const sheetKey = generate();
@@ -43,21 +45,21 @@ export const createStringify = (options: Required<Options>): Stringifier => {
 
                 if (options.inject.injectMode !== 'none') {
                     // if not none injectMode
-                    // import statement
-                    if (importStatement) {
-                        // if there is custom importStatement, we will use it
-                        builder(importStatement, cloned)
+                    if (script === 'embed') {
+                        // if we have to embed injector code
+                        /* istanbul ignore else */
+                        if (!embedCode) {
+                            // if code to inject is not loaded yet
+                            // we will read it
+                            embedCode = readCodeForEmbed(scriptType, moduleType);
+                        }
+                        // print in the injector code
+                        builder(embedCode, node);
                     } else {
-
-                        if (script === 'embed') {
-                            // if we have to embed injector code
-                            if (!embedCode) {
-                                // if code to inject is not loaded yet
-                                // we will read it
-                                embedCode = readCodeForEmbed(scriptType, moduleType);
-                            }
-                            // print in the injector code
-                            builder(embedCode, node);
+                        // import statement
+                        if (importStatement) {
+                            // if there is custom importStatement, we will use it
+                            builder(importStatement, cloned)
                         } else {
                             // if not embedding, we will import the css-es-modules lib
                             buildImportInjectStylesStatement(cloned, builder, options.inject);

@@ -7,10 +7,10 @@ import { defaultOptions, ExtendedStylesInjectOptions } from '../options';
  */
 const buildImportStatement = (
     node: Root, builder: Builder, from: string, item: string, module: 'esm' | 'cjs' = defaultOptions.inject.moduleType) => {
-    if (module === 'esm') {
-        builder(`import { ${item} } from '${from}';\n`, node);
-    } else if (module === 'cjs') {
+    if (module === 'cjs') {
         builder(`const { injectStyles } = require('${from}');\n`, node);
+    } else {
+        builder(`import { ${item} } from '${from}';\n`, node);
     }
 };
 
@@ -21,9 +21,13 @@ export const buildImportInjectStylesStatement = (
     node: Root, builder: Builder, options: ExtendedStylesInjectOptions = {}): void => {
     if (options.script === 'eject'
         && options.scriptEjectPath
-        && node.source?.input.file) {
+        && node.source
+        && node.source.input.file) {
         let rel = relative(dirname(node.source.input.file), options.scriptEjectPath);
         rel = rel.replace(/\\/g, '/');
+        if (rel === '') {
+            rel = '.'
+        }
         if (!rel.startsWith('.')) {
             rel = `./${rel}`;
         }

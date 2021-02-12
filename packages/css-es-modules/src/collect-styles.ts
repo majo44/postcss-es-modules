@@ -46,23 +46,14 @@ export function collectStyles(): StylesCollector {
     return {
         get raw() {
             const globalsCollection = global[CSS_GLOBAL_KEY];
-            let styles = '';
-            // if there is some globals styles set
-            if (globalsCollection) {
-                styles = Object.keys(globalsCollection).reduce(
-                    (r, i) => `${r}\n${globalsCollection[i]}`, styles);
-            }
+            const styles = Object.keys(globalsCollection || {}).reduce(
+                (r, i) => `${r}\n${globalsCollection[i]}`, '');
             return Object.keys(collection).reduce(
                 (r, i) => `${r}\n${collection[i]}`, styles);
         },
         get ids() {
-            const globalsCollection = global[CSS_GLOBAL_KEY];
-            let ids = {};
-            // if there is some globals styles set
-            if (globalsCollection) {
-                ids = Object.keys(globalsCollection).reduce(
-                    (r, i) => ({ ...r, [i]: true }), ids);
-            }
+            const ids = Object.keys(global[CSS_GLOBAL_KEY] || {}).reduce(
+                (r, i) => ({ ...r, [i]: true }), {});
             return Object.keys(collection).reduce(
                 (r, i) => ({ ...r, [i]: true }), ids);
         },

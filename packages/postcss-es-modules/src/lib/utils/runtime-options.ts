@@ -21,7 +21,7 @@ export const prepareRuntimeOptions = (options: Required<Options>): RuntimeOption
     if (loaderOptions) {
         let hasModifiedOptions = false;
         runtimeOptions = runtimeOptionsKeys.reduce((r, i) => {
-            if (loaderOptions[i] !== defaultStylesInjectOptions[i]) {
+            if (loaderOptions[i] !== undefined && loaderOptions[i] !== defaultStylesInjectOptions[i]) {
                 hasModifiedOptions = true;
                 return {
                     ...r,

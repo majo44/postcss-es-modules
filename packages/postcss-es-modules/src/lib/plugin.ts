@@ -12,26 +12,32 @@ import postcssModules from 'postcss-modules';
  * @internal
  */
 export const plugin = (options: Options = {}): PluginInitializer<Options> => {
+    let ejected = false;
+
     // prepare options
     const opts = {
         modules: {...defaultOptions.modules, ...options.modules},
         inject: {...defaultOptions.inject, ...options.inject}
     };
-    // validate options
-    if (options.inject?.script === 'eject') {
-        if (!options.inject.scriptEjectPath) {
-            throw 'The \'eject\' loader.script options requires also to set loader.scriptEjectPath.' +
-            'Please provide the path where the loader have to be ejected.';
-        } else if(!isAbsolute(options.inject.scriptEjectPath)) {
-            throw 'The loader.scriptEjectPath has to be absolute path.';
-        } else {
-            eject(opts);
-        }
-    }
 
     // return plugin body
     return (async (css: Root, result: Result) => {
+
+        // validate options
+        if (options.inject?.script === 'eject' && !ejected) {
+            ejected = true;
+            if (!options.inject.scriptEjectPath) {
+                throw 'The \'eject\' loader.script options requires also to set loader.scriptEjectPath.' +
+                'Please provide the path where the loader have to be ejected.';
+            } else if(!isAbsolute(options.inject.scriptEjectPath)) {
+                throw 'The loader.scriptEjectPath has to be absolute path.';
+            } else {
+                await eject(opts);
+            }
+        }
+
         // if no opts, create them
+        /* istanbul ignore if */
         if (!result.opts) {
             result.opts = {};
         }

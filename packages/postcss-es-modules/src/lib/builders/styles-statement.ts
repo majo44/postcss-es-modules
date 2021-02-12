@@ -4,6 +4,15 @@ function getResolvedClassName(classMap: Record<string, string>, className: strin
     return `${classMap[className]} ${attachOriginalClassName ? `${className} ` : ''}`;
 }
 
+function getInjectStatement(injectStatement: string | undefined, hasRuntimeOptions: boolean) {
+    if (injectStatement === undefined) {
+        injectStatement = `injectStyles(key, css${hasRuntimeOptions ? ', options' : ''});`;
+    } else {
+        injectStatement += ';';
+    }
+    return injectStatement;
+}
+
 /**
  * Build the styles statement with lazy loading.
  */
@@ -15,17 +24,13 @@ export const buildLazyStylesStatement = (
     attachOriginalClassName: boolean,
     hasRuntimeOptions: boolean): void => {
 
-    if (injectStatement === undefined) {
-        injectStatement = `injectStyles(key, css${hasRuntimeOptions ? ', options' : ''});`;
-    }
+    injectStatement = getInjectStatement(injectStatement, hasRuntimeOptions);
 
     builder(`const styles = {\n`, node);
     // styles class names map
     Object.keys(classMap).forEach((className) => {
-        if (classMap?.[className]) {
-            builder(`    get ['${className}']() { ${injectStatement} `
-                + ` return '${getResolvedClassName(classMap, className, attachOriginalClassName)}'; },\n`, node);
-        }
+        builder(`    get ['${className}']() { ${injectStatement} `
+            + ` return '${getResolvedClassName(classMap, className, attachOriginalClassName)}'; },\n`, node);
     });
     // inject method
     builder(`    inject() { ${injectStatement} }\n`, node);
@@ -44,16 +49,12 @@ export const buildOnDemandStylesStatement = (
     attachOriginalClassName: boolean,
     hasRuntimeOptions: boolean): void => {
 
-    if (injectStatement === undefined) {
-        injectStatement = `injectStyles(key, css${hasRuntimeOptions ? ', options' : ''});`;
-    }
+    injectStatement = getInjectStatement(injectStatement, hasRuntimeOptions);
 
     builder(`const styles = {\n`, node);
     // styles class names map
     Object.keys(classMap).forEach((className) => {
-        if (classMap?.[className]) {
-            builder(`    ['${className}']: '${getResolvedClassName(classMap, className, attachOriginalClassName)}',\n`, node);
-        }
+        builder(`    ['${className}']: '${getResolvedClassName(classMap, className, attachOriginalClassName)}',\n`, node);
     });
     // inject method
     builder(`    inject() { ${injectStatement} }\n`, node);

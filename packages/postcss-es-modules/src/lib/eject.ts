@@ -41,9 +41,6 @@ export const eject = async (options: Required<Options>): Promise<void> => {
                 await promises.copyFile(
                     join(codePath, `collect-styles${extension}`), collectCodePath);
             }
-        } catch (e) {
-            // on any error, just log it.
-            console.error('We have a problem with the script ejection !!', e);
         } finally {
             // notify that we where finish
             isEjecting = false;

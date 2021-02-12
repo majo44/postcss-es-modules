@@ -10,10 +10,10 @@ const htmlRegExp = new RegExp(`<style>.*?${styles2}.*?${styles1}</style><script>
 
 describe('collect-styles', () => {
     it('should collect global styles', () => {
-        const collector = collectStyles();
         global[CSS_GLOBAL_KEY] = {
             [key1]: styles1
         };
+        const collector = collectStyles();
         expect(collector.raw).contains(styles1);
         expect(collector.ids).eql({
             [key1]: true,
@@ -30,11 +30,12 @@ describe('collect-styles', () => {
         delete global[CSS_LOCALS_KEY];
     });
     it('should collect local & global styles', () => {
-        const collector = collectStyles();
-        global[CSS_LOCALS_KEY][key1] = styles1;
         global[CSS_GLOBAL_KEY] = {
             [key2]: styles2
         };
+        const collector = collectStyles();
+        global[CSS_LOCALS_KEY][key1] = styles1;
+
         expect(collector.raw).contains(styles1);
         expect(collector.raw).contains(styles2);
         expect(collector.ids).eql({
@@ -45,11 +46,11 @@ describe('collect-styles', () => {
         delete global[CSS_GLOBAL_KEY];
     });
     it('should deliver html', () => {
-        const collector = collectStyles();
-        global[CSS_LOCALS_KEY][key1] = styles1;
         global[CSS_GLOBAL_KEY] = {
             [key2]: styles2
         };
+        const collector = collectStyles();
+        global[CSS_LOCALS_KEY][key1] = styles1;
         expect(collector.html).match(htmlRegExp);
         const window = {};
         (global as any)['window'] = window;
