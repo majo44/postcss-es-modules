@@ -34,7 +34,7 @@
         "compile": "yarn compile:cjs && yarn compile:esm",
         "compile:cjs": "tsc --outDir dist/dist-cjs --module CommonJS",
         "compile:esm": "tsc --outDir dist/dist-esm --module ESNext",
-        "lint": "eslint ./**/*.ts --fix",
+        "lint": "eslint ./src/**/*.ts --fix",
         "prepublishOnly": "yarn build",
         "test": "mocha src/**/*.ts",
         "test:coverage": "nyc yarn test",
@@ -52,7 +52,15 @@
         ],
         "rules": {
             "tsdoc/syntax": "error"
-        }
+        },
+        "overrides": [
+            {
+                "files": ["*.spec.ts"],
+                "rules": {
+                    "@typescript-eslint/no-explicit-any": 0
+                }
+            }
+        ]
     },
     "mocha": {
         "require": [

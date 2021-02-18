@@ -51,5 +51,6 @@ export const plugin = (options: Options = {}): PluginInitializer<Options> => {
                 css.append(postcss.comment({text: 'modules-map:' + JSON.stringify(map)}));
             }
         })).process(css, { from: result.opts.from });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }) as any;
 };
