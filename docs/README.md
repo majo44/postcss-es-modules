@@ -61,7 +61,7 @@ in to the other parts of the application.
 * Framework agnostic  
 * Javascript and Typescript support
 * Server side rendering
-* Lazy, on demand or instant styles injection
+* Lazy, on demand, instant or none styles injection
 * Rich (optional) configuration
 
 ## Installation
@@ -70,6 +70,7 @@ npm i postcss postcss-es-modules --save-dev
 ```
 
 ## Usage
+
 Configure the postcss to use the plugin:
 ```javascript
 // postcss.config.js
@@ -126,7 +127,10 @@ declare module "*.css" {
     export default styles;
 }
 ```
-This will say to the compiler that each `*.css` import should be mapped to declared type. 
+This will say to the compiler that each `*.css` import should be mapped to declared type.
+
+### Other usage examples
+You can find more examples [here](https://majo44.github.io/postcss-es-modules/#/examples/).
 
 ## Options
 
@@ -202,7 +206,7 @@ app.listen(3000);
 ```
 
 To run this example you have to transpile css file ahead. With the `inject.moduleType` set to `cjs`.
-The full working example you will fine in the [./docs/examples/ssr-react]().
+The full working example you will find  [here](https://majo44.github.io/postcss-es-modules/#/examples/react-ssr-webpack-typescript/).
 
 ### Lazy/On demand/Instant/None styles injection
 There are few modes how the styles injection can work.
@@ -353,12 +357,9 @@ Within the `.src/styles-inject/inject-styles` you will find ejected code of inje
 
 This option can be very useful on the development process.
 
+## Next steps
+For more information please go to the [api reference](https://majo44.github.io/postcss-es-modules/#/api/) documentation
+or to the [examples](https://majo44.github.io/postcss-es-modules/#/examples/) section.
 
 ## Need a help ?
 If you have any problems, issues, ect. please use [github discussions](https://github.com/majo44/postcss-es-modules/discussions). 
-
-
-
-
-
-
