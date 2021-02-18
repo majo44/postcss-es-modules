@@ -61,7 +61,7 @@ in to the other parts of the application.
 * Framework agnostic  
 * Javascript and Typescript support
 * Server side rendering
-* Lazy, on demand, instant or none styles injection
+* Lazy, on demand or instant styles injection
 * Rich (optional) configuration
 
 ## Installation
@@ -70,7 +70,6 @@ npm i postcss postcss-es-modules --save-dev
 ```
 
 ## Usage
-
 Configure the postcss to use the plugin:
 ```javascript
 // postcss.config.js
@@ -88,13 +87,13 @@ module.exports = (ctx) => ({
 
 > This plugin is internally using *postcss-modules* plugin, so you do not have to add it by self.
 
-### Usage with the postcss-cli 
+### With the postcss-cli 
 ```bash
 postcss src/**/*.module.css --dir src --base src --ext css.js
 ```
 This command will generate the `.js` files by the post-cli, directly to your src directory.
 
-### Usage with the postcss-cli and typescript
+### With the postcss-cli and typescript
 
 ```javascript
 // postcss.config.js
@@ -109,10 +108,10 @@ module.exports = (ctx) => ({
 postcss src/**/*.module.css --dir src --base src --ext css.ts
 ```
  
-### Usage with the webpack/rollup/...
+### With the webpack/rollup/...
 There is nothing unique to use of this plugin with bundlers.
 
-### Usage with the webpack/rollup/... and typescript
+### With the webpack/rollup/... and typescript
 If you are using typescript, and you do not want to generate es css modules ahead but just 
 let the bundler do the job, for solving typescript compilation errors please add global declaration 
 to your project, like that:
@@ -203,10 +202,10 @@ app.listen(3000);
 ```
 
 To run this example you have to transpile css file ahead. With the `inject.moduleType` set to `cjs`.
-The full working example you will find in the [./docs/examples/ssr-react]().
+The full working example you will fine in the [./docs/examples/ssr-react]().
 
 ### Lazy/On demand/Instant/None styles injection
-There is fow modes how the styles injection can work.
+There are few modes how the styles injection can work.
 
 #### Lazy (default)
 The lazy injection means that the generated stylesheet will be not attached to the DOM/Node globals
@@ -282,7 +281,7 @@ export { styles, css, key };
 export default styles;
 ```
 
-### Embedding ar ejecting the injector code
+### Embedding or ejecting the injector code
 In some development workflows you can decide that you do not want to import the injector code from 
 the dependencies library, in such case you have 2 options:
 
@@ -354,8 +353,6 @@ Within the `.src/styles-inject/inject-styles` you will find ejected code of inje
 
 This option can be very useful on the development process.
 
-## Next steps
-For more information please go to the [api reference](./api/index.md) documentation.
 
 ## Need a help ?
 If you have any problems, issues, ect. please use [github discussions](https://github.com/majo44/postcss-es-modules/discussions). 

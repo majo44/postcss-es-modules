@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>postcss-es-modules</title>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
+</head>
+<body>
+    <script>
+        (function () {
+
+            const examples = [
+                'cli',
+                'cli-typescript',
+                'lit-element-webpack-typescript',
+                'postcss-middleware-typescript-scss',
+                'react-ssr-webpack-typescript'
+            ];
+
+            window.$docsify = window.$docsify || {};
+            function docsifyApiReferencePlugin(hook, vm) {
+                hook.doneEach(() => {
+                    try {
+                        if (!document.location.hash.startsWith('#/api')) return;
+                        if (document.location.hash === '#/api/index') {
+                            document.querySelector('#api-reference').remove();
+                        }
+                        document.querySelector('#main p a').innerHTML = 'Api reference';
+                        document.querySelector('#main p a').href = '#/api/'
+                        document.querySelector('.sidebar-nav .app-sub-sidebar li').remove();
+                        const path = document.querySelectorAll('#main p a');
+                        if (path.length > 1) {
+                            const internals = document.querySelector('.sidebar-nav .app-sub-sidebar');
+                            let parent = internals.parentElement;
+                            parent.classList.remove('active');
+                            for (let i = 1; i < path.length; i++) {
+                                const link = path.item(i);
+                                const list = document.createElement('ul');
+                                list.classList.add('app-sub-sidebar');
+                                const linkItem = document.createElement('li');
+                                list.append(linkItem);
+                                const newLink = document.createElement('a');
+                                newLink.href = link.href;
+                                newLink.innerText = newLink.title = link.innerText;
+                                linkItem.append(newLink);
+                                parent.append(list);
+                                parent = list;
+                            }
+                            const subList = document.createElement('li');
+                            parent.append(subList);
+                            subList.append(internals);
+
+                        }
+                    } catch (e) {}
+                });
+            }
+
+            window.addEventListener('popstate', () => {
+                if(document.location.hash === '#/api') {
+                    history.replaceState({},'', '#/api/index')
+                }
+            });
+
+            window.$docsify =  {
+                name: 'postcss-es-modules',
+                repo: 'https://github.com/majo44/postcss-es-modules',
+                loadSidebar: 'sidebar.md',
+                subMaxLevel: 10,
+                count: {
+                    countable: true,
+                    float: 'left',
+                },
+                relativePath: true,
+                basePath: window.location.pathname.indexOf('index.html') > -1 ? '../' : '.',
+                plugins: [].concat(docsifyApiReferencePlugin, window.$docsify.plugins || []),
+                alias: {
+                    ...examples.reduce((r, i) => ({
+                        ...r,
+                        [`/examples/${i}/sidebar.md`]: 'sidebar_examples_internal.md'
+                    }), {})
+                }
+            };
+        })();
+    </script>
+    <div id="app"></div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/docsify/4.11.2/docsify.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-bash.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-typescript.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs/components/prism-json.min.js"></script>
+    <script src="//unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify-tabs@1"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify-example-panels"></script>
+    <script src="//unpkg.com/docsify-copy-code@2"></script>
+    <script src="//unpkg.com/docsify-plugin-flexible-alerts"></script>
+    <script src="//unpkg.com/docsify-scroll-to-top/dist/docsify-scroll-to-top.min.js"></script>
+    <script src="//unpkg.com/docsify-count/dist/countable.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify-select@1"></script>
+    <script src="//unpkg.com/docsify-footer-enh/dist/docsify-footer-enh.min.js"></script>
+
+</body>
+</html>

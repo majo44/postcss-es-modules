@@ -97,9 +97,3 @@ properties:
 | `useConstructableStylesheet` | `boolean` | true | Use Constructable Stylesheet for styles injection to DOM if the browser supports Constructable Stylesheet |
 | `useStyleTag` | `boolean` | true | Use \<style\> tag for styles injection to DOM |
 | `useNodeGlobal` | `boolean` | true | Enable node.js global for collecting the styles, required for server side rendering |
-
-## Next steps
-For more information please go to the [api reference](./api/index.md) documentation.
-
-## Need a help ?
-If you have any problems, issues, ect. please use [github discussions](https://github.com/majo44/postcss-es-modules/discussions). 

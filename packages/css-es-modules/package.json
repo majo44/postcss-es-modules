@@ -27,16 +27,15 @@
         "src"
     ],
     "scripts": {
-        "api": "api-extractor run --local && api-documenter markdown -i ./temp -o ./docs/api",
+        "api": "api-extractor run --local && api-documenter markdown -i ./temp -o ./temp/api && copyfiles ./temp/api/*.* ../../docs/api -f",
         "api:update": "yarn compile:cjs && yarn api",
-        "build": "yarn clean && yarn lint && yarn test:coverage && yarn compile && yarn api && yarn readme",
-        "clean": "rimraf dist coverage",
+        "build": "yarn clean && yarn lint && yarn test:coverage && yarn compile && yarn api",
+        "clean": "rimraf dist coverage temp",
         "compile": "yarn compile:cjs && yarn compile:esm",
         "compile:cjs": "tsc --outDir dist/dist-cjs --module CommonJS",
         "compile:esm": "tsc --outDir dist/dist-esm --module ESNext",
         "lint": "eslint ./**/*.ts --fix",
         "prepublishOnly": "yarn build",
-        "readme": "copyfiles ./docs/README.md ./ -f",
         "test": "mocha src/**/*.ts",
         "test:coverage": "nyc yarn test",
         "test:watch": "yarn test --watch"
