@@ -8,6 +8,9 @@
         "jsxFactory": "createElement",
         "jsx": "react"
     },
+    "include": [
+        "src"
+    ],
     "ts-node": {
         "compilerOptions": {
             "module": "CommonJS"
