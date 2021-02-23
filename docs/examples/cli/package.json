@@ -5,14 +5,14 @@
     "description": "Example of usage postcss-es-modules with the postcss cli",
     "license": "MIT",
     "scripts": {
-        "build": "yarn postcss && yarn test",
-        "postcss": "postcss src/**/*.css --no-map --dir src --base src --ext css-module.js",
-        "run": "yarn build && node src/index.js",
-        "test": "node src/index.js"
+        "build": "yarn test",
+        "run": "node -r postcss-node/register src/index.js",
+        "test": "yarn run"
     },
     "devDependencies": {
         "postcss": "^7.0.35",
         "postcss-cli": "^7.1.2",
+        "postcss-node": "1.0.0",
         "postcss-es-modules": "1.0.0"
     },
     "postcss": {

@@ -1,6 +1,6 @@
 const assert = require('assert');
 // simple import generated module
-const { styles, key, css } = require('./index.css-module.js');
+const { styles, key, css } = require('./index.css');
 
 //assertion
 assert.match(styles.title, /_title_/);

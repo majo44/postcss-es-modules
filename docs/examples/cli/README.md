@@ -34,3 +34,6 @@ Project package.json
 
 > Please notice the settings for the plugin. As we are run this code directly under the node we 
 > are generating the common js modules.
+
+> Please notice the node -r option. As we are imports css files we are using here postcss-node, which 
+> provides easy way of importing the css files within the node.js.

@@ -1,6 +1,6 @@
 * [Overview](.)
 * [Examples](./examples/)  
-* [Styles injecting](./injection/)
+* [css-es-modules](./injection/)
 * [Changelog](./CHANGELOG.md)
 * [Api reference](./api/)
 

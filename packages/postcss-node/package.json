@@ -1,0 +1,102 @@
+{
+    "name": "postcss-node",
+    "version": "1.0.0",
+    "description": "Allows direct css/scss require within the node.js code",
+    "keywords": [
+        "css-in-js",
+        "css modules"
+    ],
+    "bugs": {
+        "url": "https://github.com/majo44/postcss-es-modules/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/majo44/postcss-es-modules.git"
+    },
+    "license": "MIT",
+    "author": {
+        "name": "Paweł Majewski",
+        "email": "majo44@gmail.com"
+    },
+    "sideEffects": false,
+    "main": "./index.js",
+    "module": "./dist/dist-esm/index.js",
+    "types": "./dist/dist-types/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "api": "api-extractor run --local && api-documenter markdown -i ./temp -o ./temp/api && copyfiles ./temp/api/*.* ../../docs/api -f",
+        "api:update": "yarn compile:cjs && yarn api",
+        "build": "yarn clean && yarn lint && yarn test:coverage && yarn compile && yarn api",
+        "clean": "rimraf dist coverage",
+        "compile": "yarn compile:cjs && yarn compile:esm",
+        "compile:cjs": "tsc --outDir dist/dist-cjs --module CommonJS",
+        "compile:esm": "tsc --outDir dist/dist-esm --module ESNext",
+        "lint": "eslint ./src/**/*.ts --fix",
+        "prepublishOnly": "yarn build",
+        "test": "mocha src/**/*.ts",
+        "test:coverage": "nyc yarn test",
+        "test:watch": "yarn test --watch"
+    },
+    "eslintConfig": {
+        "ignorePatterns": ["*.js"],
+        "parser": "@typescript-eslint/parser",
+        "plugins": [
+            "@typescript-eslint",
+            "eslint-plugin-tsdoc"
+        ],
+        "extends": [
+            "eslint:recommended",
+            "plugin:@typescript-eslint/recommended"
+        ],
+        "rules": {
+            "tsdoc/syntax": "error"
+        },
+        "overrides": [
+            {
+                "files": ["*.spec.ts"],
+                "rules": {
+                    "@typescript-eslint/no-explicit-any": 0
+                }
+            }
+        ]
+    },
+    "mocha": {
+        "require": [
+            "ts-node/register"
+        ],
+        "watchFiles": [
+            "test/**/*.ts",
+            "src/**/*.ts"
+        ]
+    },
+    "nyc": {
+        "all": true,
+        "branches": 1,
+        "check-coverage": true,
+        "exclude": [
+            "src/**/*.spec.ts"
+        ],
+        "extension": [
+            ".ts"
+        ],
+        "functions": 1,
+        "include": [
+            "src/**/*.ts"
+        ],
+        "lines": 1,
+        "reporter": [
+            "text-summary",
+            "html",
+            "lcovonly"
+        ],
+        "statements": 1
+    },
+    "dependencies": {
+        "postcss-load-config": "^3.0.1"
+    },
+    "peerDependencies": {
+        "postcss": "^7.0.35"
+    }
+}
