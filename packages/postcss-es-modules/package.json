@@ -132,6 +132,6 @@
         "cssnano": "^4.1.10"
     },
     "peerDependencies": {
-        "postcss": "^7.0.35"
+        "postcss": "^7.0.35 || ^8.0.0"
     }
 }

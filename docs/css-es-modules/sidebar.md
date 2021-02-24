@@ -1,6 +1,8 @@
 * [Overview](../)
 * [Examples](../examples/)
-* [css-es-modules](./)
+* Utility packages
+    * [css-es-modules](./)
+    * [postcss-node](../postcss-node/)
 * [Changelog](../CHANGELOG.md)
 * [Api reference](../api/)
 
