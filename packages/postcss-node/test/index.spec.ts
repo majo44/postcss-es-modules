@@ -78,7 +78,7 @@ describe('postcss-node', () => {
 
     it('should support custom extensions', async () => {
         const { register } = await import('../src/lib/register');
-        register(['.bcss']);
+        register(['.bcss'], 1000);
         // eslint-disable-next-line @typescript-eslint/no-var-requires
         const { styles, css, key} = require('./test4.bcss');
         expect(styles.a.length).gt(0);

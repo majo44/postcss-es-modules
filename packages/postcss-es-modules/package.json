@@ -1,6 +1,6 @@
 {
     "name": "postcss-es-modules",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Universal styles injection to work with postcss-es-modules",
     "keywords": [
         "css-in-js",
@@ -23,7 +23,8 @@
     "module": "./dist/dist-esm/index.js",
     "types": "./dist/dist-types/index.d.ts",
     "files": [
-        "dist"
+        "dist",
+        "index.js"
     ],
     "scripts": {
         "api": "api-extractor run --local && api-documenter markdown -i ./temp -o ./temp/api && copyfiles ./temp/api/*.* ../../docs/api -f",

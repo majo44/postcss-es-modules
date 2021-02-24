@@ -6,14 +6,14 @@
     "license": "MIT",
     "scripts": {
         "build": "yarn test",
-        "run": "node -r postcss-node/register src/index.js",
-        "test": "yarn run"
+        "start": "node -r postcss-node/register src/index.js",
+        "test": "yarn start"
     },
     "devDependencies": {
         "postcss": "^7.0.35",
         "postcss-cli": "^7.1.2",
-        "postcss-node": "1.0.0",
-        "postcss-es-modules": "1.0.0"
+        "postcss-node": "1.1.0",
+        "postcss-es-modules": "1.1.0"
     },
     "postcss": {
         "plugins": {

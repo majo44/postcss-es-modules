@@ -9,7 +9,7 @@ Register the css files handle for node.js
 <b>Signature:</b>
 
 ```typescript
-export declare function register(extensions?: Array<string>): void;
+export declare function register(extensions?: Array<string>, timeout?: number): void;
 ```
 
 ## Parameters
@@ -17,6 +17,7 @@ export declare function register(extensions?: Array<string>): void;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  extensions | Array&lt;string&gt; | list of extensions, by default '.css', '.scss', '.sass', '.less', '.stylus' |
+|  timeout | number | the timeout of processing |
 
 <b>Returns:</b>
 

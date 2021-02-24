@@ -9,7 +9,7 @@ const bufferSize = 64 * 1024;
  * Creates sync function proxy.
  * @internal
  */
-export function workerSyncFunction<P, R>(filename: string): (inputData: P) => R  {
+export function workerSyncFunction<P, R>(filename: string, timeout: number): (inputData: P) => R  {
     const sharedBuffer = new SharedArrayBuffer(bufferSize)
     const semaphore = new Int32Array(sharedBuffer);
     let worker: Worker | undefined;
@@ -20,11 +20,14 @@ export function workerSyncFunction<P, R>(filename: string): (inputData: P) => R 
         }
         if (!worker) {
             worker = workerInit(filename, { sharedBuffer });
+            const initResponse = Atomics.wait(semaphore, 0, 0, 5000);
+            /* istanbul ignore if */
+            if (initResponse === 'timed-out') {
+                throw 'Worker init timeout';
+            }
         }
         worker.postMessage(inputData);
-        Atomics.wait(semaphore, 0, 0)
-        const length = semaphore[0];
-        const data = v8.deserialize(Buffer.from(sharedBuffer, INT32_BYTES, length))
+        const response = Atomics.wait(semaphore, 0, 0, timeout);
         terminateTimeout = setTimeout(() => {
             /* istanbul ignore else */
             if (worker) {
@@ -33,6 +36,11 @@ export function workerSyncFunction<P, R>(filename: string): (inputData: P) => R 
                 terminateTimeout = undefined;
             }
         });
-        return data
+        /* istanbul ignore if */
+        if (response === 'timed-out') {
+            throw 'Worker timeout';
+        }
+        const length = semaphore[0];
+        return v8.deserialize(Buffer.from(sharedBuffer, INT32_BYTES, length));
     }
 }

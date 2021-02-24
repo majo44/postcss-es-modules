@@ -6,7 +6,7 @@
     "scripts": {
         "build": "yarn compile && yarn test",
         "compile": "tsc --noEmit",
-        "run": "webpack serve",
+        "start": "webpack serve",
         "test": "ts-node ./test/index.ts"
     },
     "dependencies": {
@@ -14,7 +14,7 @@
     },
     "devDependencies": {
         "postcss": "^7.0.35",
-        "postcss-es-modules": "1.0.0",
+        "postcss-es-modules": "1.1.0",
         "postcss-loader": "^4.2.0",
         "puppeteer": "^7.1.0",
         "ts-loader": "^8.0.14",

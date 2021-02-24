@@ -4,7 +4,7 @@ import * as Module from 'module';
  * @internal
  */
 export type CssRenderSyncFn =
-    (data: { code: string, filename: string }) => string;
+    (data: { code: string, filename: string }) => { css: string, ex: any };
 
 /**
  * @internal
