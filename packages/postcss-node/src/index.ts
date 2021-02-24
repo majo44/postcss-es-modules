@@ -18,7 +18,7 @@ export function register(extensions: Array<string> = defaultPostCssNodeExtension
         const orgCompile = module._compile
         module._compile = function (code: string, fileName: string) {
             if (!renderCssFile) {
-                renderCssFile = createSyncFn(__filename);
+                renderCssFile = createSyncFn(__dirname + '/worker.js');
             }
             const { css, ex } = renderCssFile({ code, filename });
             if (ex) {

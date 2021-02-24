@@ -1,5 +1,6 @@
 import v8 from 'v8';
-import { Worker, workerData } from 'worker_threads';
+import { workerData } from 'worker_threads';
+import {createWorker} from "./create-worker";
 
 const INT32_BYTES = 4
 
@@ -11,7 +12,7 @@ export function createSyncFn<P, R>(filename: string, bufferSize = 64 * 1024): (i
     const sharedBuffer = new SharedArrayBuffer(bufferSize)
     const semaphore = new Int32Array(sharedBuffer)
     return (inputData: P): R => {
-        const worker = new Worker(filename, { workerData: { inputData, sharedBuffer }, execArgv: [] })
+        const worker = createWorker(filename, { inputData, sharedBuffer });
         worker.on('error', (e) => {
             throw e
         })
