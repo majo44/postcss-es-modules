@@ -10,10 +10,9 @@ let processOptions: ProcessOptions;
 let processor: Processor;
 
 parentPort?.on('message', async (message) => {
-    const {sharedBuffer} = workerData;
     let data: { css?: string, ex?: any };
+    const {code, filename, messageBuffer} = message;
     try {
-        const {code, filename} = message;
         if (!processor) {
             const {plugins, options} = postcssrc.sync({});
             processOptions = options;
@@ -28,9 +27,9 @@ parentPort?.on('message', async (message) => {
         data = { ex };
     }
     const buf = v8.serialize(data);
-    buf.copy(Buffer.from(sharedBuffer), INT32_BYTES)
-    const semaphore = new Int32Array(sharedBuffer)
-    await Atomics.store(semaphore, 0, buf.length)
+    buf.copy(Buffer.from(messageBuffer), INT32_BYTES);
+    const semaphore = new Int32Array(messageBuffer);
+    await Atomics.store(semaphore, 0, buf.length);
     Atomics.notify(semaphore, 0)
 });
 

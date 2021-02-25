@@ -36,12 +36,12 @@ describe('postcss-node', () => {
         // eslint-disable-next-line @typescript-eslint/no-var-requires
         let { styles, css, key} = require('./test1.css');
         expect(styles.a.length).gt(0);
-        expect(css.length).gt(0);
+        expect(css).contains('blue');
         expect(key.length).gt(0);
 
         ({ styles, css, key}  = require('./test2.css'));
         expect(styles.a.length).gt(0);
-        expect(css.length).gt(0);
+        expect(css).contains('red');
         expect(key.length).gt(0);
     });
 

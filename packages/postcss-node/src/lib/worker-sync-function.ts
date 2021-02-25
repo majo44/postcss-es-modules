@@ -10,8 +10,7 @@ const bufferSize = 64 * 1024;
  * @internal
  */
 export function workerSyncFunction<P, R>(filename: string, timeout: number): (inputData: P) => R  {
-    const sharedBuffer = new SharedArrayBuffer(bufferSize)
-    const semaphore = new Int32Array(sharedBuffer);
+
     let worker: Worker | undefined;
     let terminateTimeout: any;
     return (inputData: P): R => {
@@ -19,15 +18,22 @@ export function workerSyncFunction<P, R>(filename: string, timeout: number): (in
             clearTimeout(terminateTimeout);
         }
         if (!worker) {
-            worker = workerInit(filename, { sharedBuffer });
-            const initResponse = Atomics.wait(semaphore, 0, 0, 5000);
+            const initBuffer = new SharedArrayBuffer(bufferSize)
+            const initSemaphore = new Int32Array(initBuffer);
+            worker = workerInit(filename, { sharedBuffer: initBuffer });
+            const initResponse = Atomics.wait(initSemaphore, 0, 0, 5000);
             /* istanbul ignore if */
             if (initResponse === 'timed-out') {
                 throw 'Worker init timeout';
             }
         }
-        worker.postMessage(inputData);
-        const response = Atomics.wait(semaphore, 0, 0, timeout);
+        const messageBuffer = new SharedArrayBuffer(bufferSize)
+        const messageSemaphore = new Int32Array(messageBuffer);
+        worker.postMessage({
+            ...inputData,
+            messageBuffer
+        });
+        const response = Atomics.wait(messageSemaphore, 0, 0, timeout);
         terminateTimeout = setTimeout(() => {
             /* istanbul ignore else */
             if (worker) {
@@ -40,7 +46,7 @@ export function workerSyncFunction<P, R>(filename: string, timeout: number): (in
         if (response === 'timed-out') {
             throw 'Worker timeout';
         }
-        const length = semaphore[0];
-        return v8.deserialize(Buffer.from(sharedBuffer, INT32_BYTES, length));
+        const length = messageSemaphore[0];
+        return v8.deserialize(Buffer.from(messageBuffer, INT32_BYTES, length));
     }
 }
