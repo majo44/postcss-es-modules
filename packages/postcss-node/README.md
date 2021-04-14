@@ -83,7 +83,7 @@ node test.js
 ```javascript
 /* test.js */
 const { register } = require('postcss-node');
-register(['.acss']);
+register(['.acss', '.bcss', '.css']);
 const { styles, css } = require('./test.acss');
 console.log(css);
 console.log(styles.a);
@@ -94,6 +94,15 @@ console.log(styles.a);
     color: blue;
 } 
 ```
+> You can also provide the custom extensions by the `POSTCSS_NODE_EXT` environment variable like: 
+> `cross-env POSTCSS_NODE_EXT=.acss,.bcss,.css`
+
+### Other options
+The `register` function is able to take the two more optional parameter
+* timeout (`POSTCSS_NODE_TIMEOUT`) - the timeout of css processing, default 60000 ms
+* bufferSize (`POSTCSS_NODE_BUFFER_SIZE`) - the size of buffer used to transfer compiled code from 
+  the worker, in case of `RangeError [ERR_BUFFER_OUT_OF_BOUNDS]: "length" is outside of buffer bounds`
+  error please increase this parameter, default 1024 kB   
 
 ## Need a help ?
 If you have any problems, issues, ect. please use [github discussions](https://github.com/majo44/postcss-es-modules/discussions). 

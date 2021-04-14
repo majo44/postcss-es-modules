@@ -8,5 +8,5 @@
 
 |  Function | Description |
 |  --- | --- |
-|  [register(extensions, timeout)](./postcss-node.register.md) | Register the css files handle for node.js |
+|  [register(extensions, timeout, bufferSize)](./postcss-node.register.md) | Register the css files handle for node.js |
 

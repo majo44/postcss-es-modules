@@ -3,14 +3,16 @@ import { Worker } from "worker_threads";
 import { workerInit } from './worker-init';
 
 const INT32_BYTES = 4
-const bufferSize = 64 * 1024;
+const initBufferSize = 64 * 1024;
 
 /**
  * Creates sync function proxy.
  * @internal
  */
-export function workerSyncFunction<P, R>(filename: string, timeout: number): (inputData: P) => R  {
-
+export function workerSyncFunction<P, R>(
+    filename: string,
+    timeout: number,
+    bufferSize: number): (inputData: P) => R  {
     let worker: Worker | undefined;
     let terminateTimeout: any;
     return (inputData: P): R => {
@@ -18,7 +20,7 @@ export function workerSyncFunction<P, R>(filename: string, timeout: number): (in
             clearTimeout(terminateTimeout);
         }
         if (!worker) {
-            const initBuffer = new SharedArrayBuffer(bufferSize)
+            const initBuffer = new SharedArrayBuffer(initBufferSize)
             const initSemaphore = new Int32Array(initBuffer);
             worker = workerInit(filename, { sharedBuffer: initBuffer });
             const initResponse = Atomics.wait(initSemaphore, 0, 0, 5000);
@@ -27,7 +29,7 @@ export function workerSyncFunction<P, R>(filename: string, timeout: number): (in
                 throw 'Worker init timeout';
             }
         }
-        const messageBuffer = new SharedArrayBuffer(bufferSize)
+        const messageBuffer = new SharedArrayBuffer(bufferSize * 1024)
         const messageSemaphore = new Int32Array(messageBuffer);
         worker.postMessage({
             ...inputData,

@@ -78,11 +78,41 @@ describe('postcss-node', () => {
 
     it('should support custom extensions', async () => {
         const { register } = await import('../src/lib/register');
-        register(['.bcss'], 1000);
+        register(['.bcss'], 1000, 512);
         // eslint-disable-next-line @typescript-eslint/no-var-requires
         const { styles, css, key} = require('./test4.bcss');
         expect(styles.a.length).gt(0);
         expect(css.length).gt(0);
         expect(key.length).gt(0);
+    });
+
+    it('should support custom extensions by env', async () => {
+        process.env.POSTCSS_NODE_EXT = '.ccss';
+        const { register } = await import('../src/lib/register');
+        register();
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        const { styles, css, key} = require('./test4.ccss');
+        expect(styles.a.length).gt(0);
+        expect(css.length).gt(0);
+        expect(key.length).gt(0);
+        delete process.env.POSTCSS_NODE_EXT;
+    });
+
+    it('should support custom timeout by env', async () => {
+        process.env.POSTCSS_NODE_TIMEOUT = '0';
+        const { register } = await import('../src/lib/register');
+        register();
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        expect(() => require('./test5.css')).throw('Worker timeout');
+        delete process.env.POSTCSS_NODE_TIMEOUT;
+    });
+
+    it('should support custom buffer size by env', async () => {
+        process.env.POSTCSS_NODE_BUFFER_SIZE = '1';
+        const { register } = await import('../src/lib/register');
+        register();
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        expect(() => require('./test6.css')).throw('"length" is outside of buffer bounds');
+        delete process.env.POSTCSS_NODE_BUFFER_SIZE;
     });
 })
