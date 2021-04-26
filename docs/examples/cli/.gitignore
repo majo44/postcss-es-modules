@@ -1,2 +1,1 @@
-*.styles.ts
-src/styles-inject
+*.css-module.js

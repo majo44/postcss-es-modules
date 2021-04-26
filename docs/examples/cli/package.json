@@ -1,12 +1,13 @@
 {
-    "name": "cli",
+    "name": "postcss-es-modules-example-cli",
     "version": "1.0.0",
     "private": true,
+    "description": "Example of usage postcss-es-modules with the postcss cli",
+    "license": "MIT",
     "scripts": {
-        "build": "yarn postcss && yarn compile",
-        "compile": "tsc --noEmit",
-        "postcss": "postcss src/**/*.module.css --no-map --dir src --base src --ext styles.ts",
-        "run": "ts-node src/index.ts"
+        "build": "yarn test",
+        "start": "node -r postcss-node/register src/index.js",
+        "test": "yarn start"
     },
     "devDependencies": {
         "postcss": "^8.2.6",
@@ -15,5 +16,14 @@
         "css-es-modules": "^0.1.0",
         "typescript": "^4.1.5",
         "ts-node": "^9.1.1"
+    },
+    "postcss": {
+        "plugins": {
+            "postcss-es-modules": {
+                "inject": {
+                    "moduleType": "cjs"
+                }
+            }
+        }
     }
 }

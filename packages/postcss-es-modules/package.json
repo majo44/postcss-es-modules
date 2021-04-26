@@ -1,6 +1,6 @@
 {
     "name": "postcss-es-modules",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Universal styles injection to work with postcss-es-modules",
     "keywords": [
         "css-in-js",
@@ -19,31 +19,29 @@
         "email": "majo44@gmail.com"
     },
     "sideEffects": false,
-    "main": "./dist/dist-cjs/index.js",
+    "main": "./index.js",
     "module": "./dist/dist-esm/index.js",
     "types": "./dist/dist-types/index.d.ts",
     "files": [
-        "dist"
+        "dist",
+        "index.js"
     ],
     "scripts": {
-        "api": "api-extractor run --local && api-documenter markdown -i ./temp -o ../../docs/api",
+        "api": "api-extractor run --local && api-documenter markdown -i ./temp -o ./temp/api && copyfiles ./temp/api/*.* ../../docs/api -f",
         "api:update": "yarn compile:cjs && yarn api",
-        "build": "yarn clean && yarn lint && yarn compile",
-        "build:irg": "yarn clean && yarn lint && yarn test:coverage && yarn compile && yarn api && yarn readme",
+        "build": "yarn clean && yarn lint && yarn test:coverage && yarn compile && yarn api",
         "clean": "rimraf dist coverage",
         "compile": "yarn compile:cjs && yarn compile:esm",
         "compile:cjs": "tsc --outDir dist/dist-cjs --module CommonJS",
         "compile:esm": "tsc --outDir dist/dist-esm --module ESNext",
-        "lint": "eslint ./**/*.ts --fix",
+        "lint": "eslint ./src/**/*.ts --fix",
         "prepublishOnly": "yarn build",
-        "readme": "yarn readme1 && yarn readme2",
-        "readme1": "copyfiles ../../docs/README.md ../../ -f && replace-in-files --string=\"](./\" --replacement=\"](./docs/\" README.md",
-        "readme2": "copyfiles ../../docs/README.md ./ -f",
         "test": "mocha src/**/*.ts",
         "test:coverage": "nyc yarn test",
         "test:watch": "yarn test --watch"
     },
     "eslintConfig": {
+        "ignorePatterns": ["*.js"],
         "parser": "@typescript-eslint/parser",
         "plugins": [
             "@typescript-eslint",
@@ -99,13 +97,14 @@
     "dependencies": {
         "css-es-modules": "1.0.0",
         "postcss-modules": "^4.0.0",
-        "short-uuid": "^4.1.0",
+        "md5": "^2.3.0",
         "tslib": "^2.1.0"
     },
     "devDependencies": {
         "@microsoft/api-documenter": "^7.12.1",
         "@microsoft/api-extractor": "^7.12.1",
         "@types/chai": "^4.2.14",
+        "@types/md5": "^2.3.0",
         "@types/mocha": "^8.2.0",
         "@types/node": "^14.14.22",
         "@types/sinon": "^9.0.10",
