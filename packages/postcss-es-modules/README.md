@@ -151,8 +151,8 @@ Here is the list of all available options, for more details please go to [Recipe
 | `inject.custom` | `object`| - | The custom style injector configuration |
 | `inject.custom.importStatement` | `string`| - | The custom style injector statement for import required dependencies. Eg: `"import { injectMyStyles } from 'somelib'";` |
 | `inject.custom.injectStatement` | `string`| - | The custom style injector statement for executing the injection. There are available two constants in the context:<br/>- `css` - the raw css string code<br/>- `key` - unique key of the stylesheet<br/>Eg: `"injectMyStyles(css)"` |
-| `module` | `object`| - | The CSS Modules options. It is inherits all options from the [postcss-modules](https://github.com/css-modules/postcss-modules) expect `getJSON` |
-| `module.attachOriginalClassName` | `boolean`| false | The CSS Modules options. If you want to still use the original class name next to local one |
+| `modules` | `object`| - | The CSS Modules options. It is inherits all options from the [postcss-modules](https://github.com/css-modules/postcss-modules) expect `getJSON` |
+| `modules.attachOriginalClassName` | `boolean`| false | The CSS Modules options. If you want to still use the original class name next to local one |
 
 ## Recipes
 

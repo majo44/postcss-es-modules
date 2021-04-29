@@ -1,7 +1,7 @@
 import { Builder, Root } from 'postcss';
 
 function getResolvedClassName(classMap: Record<string, string>, className: string, attachOriginalClassName: boolean) {
-    return `${classMap[className]} ${attachOriginalClassName ? `${className} ` : ''}`;
+    return `${classMap[className]}${attachOriginalClassName ? ` ${className}` : ''}`;
 }
 
 function getInjectStatement(injectStatement: string | undefined, hasRuntimeOptions: boolean) {
