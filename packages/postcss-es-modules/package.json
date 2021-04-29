@@ -134,6 +134,6 @@
         "postcss": "^8.2.6"
     },
     "peerDependencies": {
-        "postcss": "^8.2.6"
+        "postcss": "^8.0.0"
     }
 }
