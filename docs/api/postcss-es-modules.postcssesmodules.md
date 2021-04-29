@@ -9,5 +9,5 @@ Postcss plugin which converts the css code into the es module.
 <b>Signature:</b>
 
 ```typescript
-postcssEsModules: postcss.Plugin<Options>
+postcssEsModules: (opts: Options) => Plugin
 ```

@@ -10,7 +10,7 @@ const classMap = {
     'a': 'b'
 };
 
-describe('import-statement', () => {
+describe('styles-statement', () => {
 
     it('should generate lazy statement', () => {
         let result = '';

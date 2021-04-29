@@ -245,7 +245,7 @@ describe('plugin', () => {
     });
 
     it('with other plugins', async () => {
-        const pcss = await postcss([postCssSass(), cssnano(), plugin()]).process(scss, processorOpt);
+        const pcss = await postcss([/*postCssSass(),*/ cssnano(), plugin()]).process(css, processorOpt);
         const js = transpileModule(pcss.css, {compilerOptions: {module: ModuleKind.CommonJS}});
         const module = requireFromString(js.outputText);
         checkModule({
