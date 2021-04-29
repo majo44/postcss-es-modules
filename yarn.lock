@@ -5941,6 +5941,13 @@ postcss-modules@^3.2.2:
     postcss-modules-values "^3.0.0"
     string-hash "^1.1.1"
 
+postcss-node@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/postcss-node/-/postcss-node-1.1.0.tgz#02bb3141f03936a3812a11a0fc3058c7a56ba985"
+  integrity sha512-Ba0HF6P4Ve5TQL4bhTBWsZ5W7bdRn98Cv5mQuuAUOu6+ZQKidPqbeiNhsVWg8wxS0DRXTqkr9WDgmAtJMosUBw==
+  dependencies:
+    postcss-load-config "^3.0.1"
+
 postcss-normalize-charset@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/postcss-normalize-charset/-/postcss-normalize-charset-4.0.1.tgz#8b35add3aee83a136b0471e0d59be58a50285dd4"
