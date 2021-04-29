@@ -1,13 +1,13 @@
 /* istanbul ignore file */
-import postcss, { ProcessOptions, Processor } from 'postcss';
+import postcss  from 'postcss';
 import postcssrc from 'postcss-load-config';
 import v8 from 'v8';
 import { parentPort, workerData } from 'worker_threads';
 
 const INT32_BYTES = 4;
 
-let processOptions: ProcessOptions;
-let processor: Processor;
+let processOptions: ReturnType<typeof postcssrc.sync>['options'];
+let processor: ReturnType<typeof postcss>;
 
 parentPort?.on('message', async (message) => {
     let data: { css?: string, ex?: any };
@@ -19,7 +19,7 @@ parentPort?.on('message', async (message) => {
             processor = postcss(plugins);
         }
         const result = await processor.process(code, {
-            ...processOptions,
+            ...(processOptions as any),
             from: filename
         });
         data = { css: result.css };
