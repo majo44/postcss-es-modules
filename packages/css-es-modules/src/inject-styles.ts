@@ -148,7 +148,7 @@ export function injectStyles(
             }
             (document.head ||
                 /* istanbul ignore next */
-                document.getElementsByTagName('head')).appendChild(styleElement);
+                document.getElementsByTagName('head')?.[0])?.appendChild(styleElement);
         }
     }
 }

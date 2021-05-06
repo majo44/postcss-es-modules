@@ -8,5 +8,5 @@
 
 |  Package | Description |
 |  --- | --- |
-|  [postcss-node](./postcss-node.md) |  |
+|  [postcss-es-modules](./postcss-es-modules.md) |  |
 

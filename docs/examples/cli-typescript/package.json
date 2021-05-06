@@ -7,7 +7,7 @@
     "scripts": {
         "build": "yarn postcss && yarn compile && yarn test",
         "compile": "tsc --noEmit",
-        "postcss": "postcss src/**/*.css --no-map --dir src --base src --ext css-module.ts",
+        "postcss": "postcss src/**/*.css --no-map --dir src --base src --ext css.ts",
         "start": "yarn build && ts-node src/index.ts",
         "test": "ts-node src/index.ts"
     },
@@ -22,7 +22,11 @@
         "plugins": {
             "postcss-es-modules": {
                 "inject": {
+                    "script": "embed",
                     "scriptType": "ts"
+                },
+                "modules": {
+                    "attachOriginalClassName": true
                 }
             }
         }
