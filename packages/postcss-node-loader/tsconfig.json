@@ -1,0 +1,36 @@
+{
+    "compilerOptions": {
+        "target": "ES5",
+        "module": "ESNext",
+        "declarationDir": "dist/dist-types",
+        "skipLibCheck": true,
+        "moduleResolution": "Node",
+        "esModuleInterop": true,
+        "sourceMap": true,
+        "strict": true,
+        "declaration": true,
+        "declarationMap": true,
+        "experimentalDecorators": true,
+        "importHelpers": true,
+        "noEmitHelpers": true,
+        "isolatedModules": true,
+        "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true,
+        "allowJs": true,
+        "rootDir": "src",
+        "baseUrl": "src",
+        "lib": ["ES6", "DOM"]
+    },
+    "exclude": [
+        "src/**/*.spec.ts"
+    ],
+    "include": [
+        "src"
+    ],
+    "ts-node": {
+        "transpileOnly": true,
+        "compilerOptions": {
+            "module": "CommonJS"
+        }
+    }
+}
