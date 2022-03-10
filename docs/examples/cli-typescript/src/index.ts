@@ -1,6 +1,6 @@
 import * as assert from 'assert';
 // simple import generated module
-import { styles, key, css } from './index.css-module';
+import { styles, key, css } from './index.css';
 
 //assertion
 assert.match(styles.title, /_title_/);

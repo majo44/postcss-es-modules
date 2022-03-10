@@ -18,6 +18,7 @@
         "allowJs": true,
         "rootDir": "src",
         "baseUrl": "src",
+        "skipLibCheck": true,
         "lib": ["ES6", "DOM"]
     },
     "exclude": [
