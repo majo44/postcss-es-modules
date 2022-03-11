@@ -1,6 +1,6 @@
 {
     "name": "postcss-es-modules",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "description": "Universal styles injection to work with postcss-es-modules",
     "keywords": [
         "css-in-js",
@@ -95,7 +95,7 @@
         "statements": 1
     },
     "dependencies": {
-        "css-es-modules": "1.0.1",
+        "css-es-modules": "1.0.2",
         "postcss-modules": "^4.0.0",
         "md5": "^2.3.0",
         "tslib": "^2.1.0"

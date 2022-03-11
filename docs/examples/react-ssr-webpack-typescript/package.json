@@ -1,6 +1,6 @@
 {
     "name": "postcss-es-modules-examples-react-ssr-webpack-typescript",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "MIT",
     "scripts": {
         "build": "yarn compile && webpack && yarn test",
@@ -18,7 +18,7 @@
         "@types/node": "^16.11.26",
         "postcss": "^8.2.13",
         "postcss-cli": "^8.3.1",
-        "postcss-es-modules": "2.0.1",
+        "postcss-es-modules": "2.0.2",
         "postcss-loader": "^5.2.0",
         "puppeteer": "^7.1.0",
         "ts-loader": "^9.1.1",

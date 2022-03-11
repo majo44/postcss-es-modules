@@ -1,6 +1,6 @@
 {
     "name": "css-es-modules",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Universal styles injection to work with postcss-es-modules",
     "keywords": [
         "css-in-js",

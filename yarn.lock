@@ -1813,11 +1813,6 @@ css-declaration-sorter@^4.0.1:
     postcss "^7.0.1"
     timsort "^0.3.0"
 
-css-es-modules@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/css-es-modules/-/css-es-modules-1.0.0.tgz#2512c9a844f6fc6ca42d26228ecb947513f83615"
-  integrity sha512-6rIz7a60+tM92k7zw6QjgIzQA8hD120ST9sKjMHleGCZ4xoerJa2OzaeMLHLM6cNGDgBgigYi9of9pYbE3T2Qw==
-
 css-select-base-adapter@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/css-select-base-adapter/-/css-select-base-adapter-0.1.1.tgz#3b2ff4972cc362ab88561507a95408a1432135d7"
@@ -5237,13 +5232,6 @@ postcss-modules@^4.0.0:
     postcss-modules-scope "^3.0.0"
     postcss-modules-values "^4.0.0"
     string-hash "^1.1.1"
-
-postcss-node@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/postcss-node/-/postcss-node-1.2.0.tgz#1dd756832099046b61c576e6afbadd4d9c72a70b"
-  integrity sha512-b36mBac8kPL5f5XXEq6LNaIvlUkDpNpxzHYUvsM/XiCV6hUAVyIyIaQ+ip2dIufDM9oW4j0RHlR+RXrP5LCioA==
-  dependencies:
-    postcss-load-config "^3.0.1"
 
 postcss-normalize-charset@^4.0.1:
   version "4.0.1"
