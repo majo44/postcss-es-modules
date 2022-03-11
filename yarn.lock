@@ -5117,16 +5117,6 @@ postcss-discard-overridden@^4.0.1:
   dependencies:
     postcss "^7.0.0"
 
-postcss-es-modules@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/postcss-es-modules/-/postcss-es-modules-2.0.0.tgz#c696eda13a29956730752a8b36d688ace152f5b0"
-  integrity sha512-SQ2bpnDL0+4Kof9d+uHS/WgJmSMXa6PPp38PFs97dYi+FBQPnVKQjILkTkoSvu3E7Qdrk5bOdd4T9FLgEATUNQ==
-  dependencies:
-    css-es-modules "1.0.0"
-    md5 "^2.3.0"
-    postcss-modules "^4.0.0"
-    tslib "^2.1.0"
-
 postcss-load-config@^3.0.0, postcss-load-config@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/postcss-load-config/-/postcss-load-config-3.0.1.tgz#d214bf9cfec1608ffaf0f4161b3ba20664ab64b9"
