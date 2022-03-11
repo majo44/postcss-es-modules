@@ -1,6 +1,6 @@
 {
     "name": "postcss-node",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "Package which allows import of css/scss/lass/.. files under the node.js eg `require('styles.css')`",
     "keywords": [
         "css-in-js",
@@ -100,11 +100,11 @@
         "tslib": "^2.1.0"
     },
     "devDependencies": {
-        "postcss-es-modules": "^2.0.0",
+        "postcss-es-modules": "^2.0.2",
         "postcss": "^8.2.13",
         "@types/chai": "^4.2.14",
         "@types/mocha": "^8.2.0",
-        "@types/node": "^14.14.22",
+        "@types/node": "^16.11.26",
         "@typescript-eslint/eslint-plugin": "^4.11.1",
         "@typescript-eslint/parser": "^4.11.1",
         "chai": "^4.2.0",

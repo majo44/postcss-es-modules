@@ -1,20 +1,21 @@
 {
     "name": "postcss-es-modules-example-cli-typescript",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "private": true,
     "description": "Example of usage postcss-es-modules with the postcss cli",
     "license": "MIT",
     "scripts": {
         "build": "yarn postcss && yarn compile && yarn test",
         "compile": "tsc --noEmit",
-        "postcss": "postcss src/**/*.css --no-map --dir src --base src --ext css.ts",
+        "postcss": "postcss src/**/*.css --no-map --dir src --base src --ext css-module.ts",
         "start": "yarn build && ts-node src/index.ts",
         "test": "ts-node src/index.ts"
     },
     "devDependencies": {
+        "@types/node": "^16.11.26",
         "postcss": "^8.2.13",
         "postcss-cli": "^8.3.1",
-        "postcss-es-modules": "2.0.0",
+        "postcss-es-modules": "2.0.2",
         "ts-node": "^9.1.1",
         "typescript": "^4.1.3"
     },
@@ -26,7 +27,7 @@
                     "scriptType": "ts"
                 },
                 "modules": {
-                    "attachOriginalClassName": true
+                    "attachOriginalClassName": true                    
                 }
             }
         }

@@ -1,6 +1,6 @@
 {
     "name": "postcss-es-modules-examples-lit-element-webpack-typescript",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "private": true,
     "license": "MIT",
     "scripts": {
@@ -14,7 +14,7 @@
     },
     "devDependencies": {
         "postcss": "^8.2.13",
-        "postcss-es-modules": "2.0.0",
+        "postcss-es-modules": "2.0.2",
         "postcss-loader": "^5.2.0",
         "puppeteer": "^7.1.0",
         "ts-loader": "^9.1.1",

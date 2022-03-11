@@ -3,16 +3,14 @@ import { CSS_GLOBAL_KEY, CSS_LOCALS_KEY } from './inject-styles';
 
 // globals declaration to avoid the typescript compile errors
 declare global {
+    // Using `string | true` as second record generic because Window is type of `Window & typeof globalThis;`
+    var $CSS$IN$JS$GLOBALS$: Record<string, string | true>;
+    var $CSS$IN$JS$LOCALS$: Record<string, string>;
+
     interface Document {
         adoptedStyleSheets: CSSStyleSheet[];
     }
-    namespace NodeJS {
-        interface Global {
-            [CSS_GLOBAL_KEY]: Record<string, string>;
-            [CSS_LOCALS_KEY]: Record<string, string>;
-        }
-    }
-    var global: NodeJS.Global & typeof globalThis;
+    var global: typeof globalThis;
 }
 
 /**

@@ -14,7 +14,8 @@
         "resolveJsonModule": true,
         "allowJs": true,
         "rootDir": "src",
-        "baseUrl": "src"
+        "baseUrl": "src",
+        "skipLibCheck": true,
     },
     "exclude": [
         "src/**/*.spec.ts"

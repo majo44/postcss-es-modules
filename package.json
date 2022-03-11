@@ -7,6 +7,9 @@
         "docs/examples/*"
     ],
     "scripts": {
-        "build": "yarn workspaces run build"
+        "build": "yarn workspaces run build",
+        "compile": "yarn workspaces run compile",
+        "test": "yarn workspaces run test",
+        "lint": "yarn workspaces run lint"
     }
 }
