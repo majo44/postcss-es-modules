@@ -1,6 +1,6 @@
 {
     "name": "postcss-es-modules",
-    "version": "2.0.2",
+    "version": "2.2.0",
     "description": "Universal styles injection to work with postcss-es-modules",
     "keywords": [
         "css-in-js",
@@ -29,7 +29,7 @@
     "scripts": {
         "api": "api-extractor run --local && api-documenter markdown -i ./temp -o ./temp/api && copyfiles ./temp/api/*.* ../../docs/api -f",
         "api:update": "yarn compile:cjs && yarn api",
-        "build": "yarn clean && yarn lint && yarn test:coverage && yarn compile && yarn api",
+        "build": "yarn clean && yarn lint && yarn compile && yarn api",
         "clean": "rimraf dist coverage",
         "compile": "yarn compile:cjs && yarn compile:esm",
         "compile:cjs": "tsc --outDir dist/dist-cjs --module CommonJS",

@@ -6,6 +6,11 @@ declare global {
     var $CSS$IN$JS$GLOBALS$: Record<string, string | true>;
     var $CSS$IN$JS$LOCALS$: Record<string, string>;
 
+    interface ShadowRoot {
+        $CSS$IN$JS$GLOBALS$: Record<string, string | true>;
+        adoptedStyleSheets: CSSStyleSheet[];
+    }
+
     interface CSSStyleSheet {
         replace(text: string): Promise<CSSStyleSheet>;
         replaceSync(text: string): void;
@@ -79,13 +84,15 @@ export const defaultStylesInjectOptions: StylesInjectOptions = {
  * @param stylesheetKey - the unique stylesheet key
  * @param stylesheetBody - the stylesheet body
  * @param options - inject options
+ * @param shadowRoot - optional shadow root where styles will be injected
  * @param serverSide - force server/client approach
  */
 export function injectStyles(
     stylesheetKey: string,
     stylesheetBody: string,
     options?: StylesInjectOptions,
-    serverSide: boolean = isNode
+    serverSide: boolean = isNode,
+    shadowRoot?: ShadowRoot
 ): void {
     // prepare options
     const { useNodeGlobal, useConstructableStylesheet, useStyleTag, useNounce } = {
@@ -114,36 +121,43 @@ export function injectStyles(
     // if we are on the browser side
     // and style is not already registered
     // and client side injection is enabled
-    if (!serverSide
-        && !window[CSS_GLOBAL_KEY]?.[stylesheetKey]
-        && (useConstructableStylesheet || useStyleTag)) {
-        // marking style as injected
-        window[CSS_GLOBAL_KEY] = {
-            ...window[CSS_GLOBAL_KEY],
-            [stylesheetKey]: true
-        }
-        // if constructable stylesheet flag is enabled and available
-        if (useConstructableStylesheet && document.adoptedStyleSheets) {
-            // we are using constructable stylesheet injection method
-            const stylesheet = new CSSStyleSheet();
-            stylesheet.replace(stylesheetBody);
-            document.adoptedStyleSheets = [...document.adoptedStyleSheets, stylesheet];
-            return;
-        }
-        // if style tag flag is enabled
-        if (useStyleTag) {
-            // we are injecting stylesheet by styles tag
-            const styleElement: HTMLStyleElement = document.createElement('style');
-            useNounce && styleElement.setAttribute('nounce', useNounce);
-            /* istanbul ignore if */
-            if ((styleElement as any).styleSheet) {
-                (styleElement as any).styleSheet.cssText += stylesheetBody
-            } else {
-                styleElement.textContent += stylesheetBody;
+    if (!serverSide) {
+        const context = shadowRoot || window;
+        const adopter = shadowRoot || document;
+        if (!context[CSS_GLOBAL_KEY]?.[stylesheetKey]
+            && (useConstructableStylesheet || useStyleTag)) {
+            // marking style as injected
+            context[CSS_GLOBAL_KEY] = {
+                ...context[CSS_GLOBAL_KEY],
+                [stylesheetKey]: true
             }
-            (document.head ||
-                /* istanbul ignore next */
-                document.getElementsByTagName('head')?.[0])?.appendChild(styleElement);
+            // if constructable stylesheet flag is enabled and available
+            if (useConstructableStylesheet && adopter.adoptedStyleSheets) {
+                // we are using constructable stylesheet injection method
+                const stylesheet = new CSSStyleSheet();
+                stylesheet.replace(stylesheetBody);
+                adopter.adoptedStyleSheets = [...adopter.adoptedStyleSheets, stylesheet];
+                return;
+            }
+            // if style tag flag is enabled
+            if (useStyleTag) {
+                // we are injecting stylesheet by styles tag
+                const styleElement: HTMLStyleElement = document.createElement('style');
+                useNounce && styleElement.setAttribute('nounce', useNounce);
+                /* istanbul ignore if */
+                if ((styleElement as any).styleSheet) {
+                    (styleElement as any).styleSheet.cssText += stylesheetBody
+                } else {
+                    styleElement.textContent += stylesheetBody;
+                }
+                if (shadowRoot) {
+                    shadowRoot.appendChild(styleElement);
+                } else {
+                    (document.head ||
+                        /* istanbul ignore next */
+                        document.getElementsByTagName('head')?.[0])?.appendChild(styleElement);
+                }
+            }
         }
     }
 }

@@ -9,11 +9,9 @@ import requireFromString from 'require-from-string';
 import fsMock from 'mock-fs';
 import requireMock from 'mock-require';
 import cssnano from 'cssnano';
-import postCssSass from '@csstools/postcss-sass';
 
 const rule = '{ color: blue; }';
 const css = `.a ${rule}`;
-const scss = `$color: blue; .a { color: $color }`;
 const processorOpt = { from: '/some/path/test.css' };
 
 describe('plugin', () => {

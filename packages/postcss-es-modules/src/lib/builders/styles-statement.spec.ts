@@ -60,7 +60,7 @@ describe('styles-statement', () => {
         buildOnDemandStylesStatement(builder, node, classMap, undefined, false, false);
         expect(result).eq('const styles = {\n' +
             '    [\'a\']: \'b\',\n' +
-            '    inject() { injectStyles(key, css); }\n' +
+            '    inject(shadowRoot) { injectStyles(key, css, undefined, shadowRoot); }\n' +
             '};\n');
     });
     it('should generate on demand statement with custom inject statement', () => {
@@ -70,7 +70,7 @@ describe('styles-statement', () => {
         buildOnDemandStylesStatement(builder, node, classMap, 'myInjector(css, key)', false, false);
         expect(result).eq('const styles = {\n' +
             '    [\'a\']: \'b\',\n' +
-            '    inject() { myInjector(css, key); }\n' +
+            '    inject(shadowRoot) { myInjector(css, key); }\n' +
             '};\n');
     });
     it('should generate instant statement', () => {
@@ -80,7 +80,7 @@ describe('styles-statement', () => {
         buildInstantStylesStatement(builder, node, classMap, undefined, false, false);
         expect(result).eq('const styles = {\n' +
             '    [\'a\']: \'b\',\n' +
-            '    inject() { injectStyles(key, css); }\n' +
+            '    inject(shadowRoot) { injectStyles(key, css, undefined, shadowRoot); }\n' +
             '};\n' +
             'styles.inject();\n');
     });
@@ -91,7 +91,7 @@ describe('styles-statement', () => {
         buildInstantStylesStatement(builder, node, classMap, 'myInjector(css, key)', false, false);
         expect(result).eq('const styles = {\n' +
             '    [\'a\']: \'b\',\n' +
-            '    inject() { myInjector(css, key); }\n' +
+            '    inject(shadowRoot) { myInjector(css, key); }\n' +
             '};\n' +
             'styles.inject();\n');
     });

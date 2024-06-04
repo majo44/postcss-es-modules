@@ -9,7 +9,7 @@ Inject stylesheet to global on node or to the document DOM on the browser
 <b>Signature:</b>
 
 ```typescript
-export declare function injectStyles(stylesheetKey: string, stylesheetBody: string, options?: StylesInjectOptions, serverSide?: boolean): void;
+export declare function injectStyles(stylesheetKey: string, stylesheetBody: string, options?: StylesInjectOptions, serverSide?: boolean, shadowRoot?: ShadowRoot): void;
 ```
 
 ## Parameters
@@ -20,6 +20,7 @@ export declare function injectStyles(stylesheetKey: string, stylesheetBody: stri
 |  stylesheetBody | string | the stylesheet body |
 |  options | [StylesInjectOptions](./css-es-modules.stylesinjectoptions.md) | inject options |
 |  serverSide | boolean | force server/client approach |
+|  shadowRoot | ShadowRoot | optional shadow root where styles will be injected |
 
 <b>Returns:</b>
 

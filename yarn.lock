@@ -1813,6 +1813,11 @@ css-declaration-sorter@^4.0.1:
     postcss "^7.0.1"
     timsort "^0.3.0"
 
+css-es-modules@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/css-es-modules/-/css-es-modules-1.0.2.tgz#6157b546e852c902a65d17dd0ded6822559075fc"
+  integrity sha512-pHV3uTKNnfVwZ7l91gZGWUJOijZP0APUu74W0Lnoz0l47nE/CBxCg6pcHqbwZPmx1XaRKxmg8XZVKqLrnFVNBg==
+
 css-select-base-adapter@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/css-select-base-adapter/-/css-select-base-adapter-0.1.1.tgz#3b2ff4972cc362ab88561507a95408a1432135d7"
@@ -5111,6 +5116,16 @@ postcss-discard-overridden@^4.0.1:
   integrity sha512-IYY2bEDD7g1XM1IDEsUT4//iEYCxAmP5oDSFMVU/JVvT7gh+l4fmjciLqGgwjdWpQIdb0Che2VX00QObS5+cTg==
   dependencies:
     postcss "^7.0.0"
+
+postcss-es-modules@2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/postcss-es-modules/-/postcss-es-modules-2.0.2.tgz#211f94ad1baa11944e798d2e58d843238f6efd8f"
+  integrity sha512-UBBFD/2Md6LuwFUzD5wHnM7hv66BrV0IX/1eV8qp1TlMN2Dd6VyjCw1YpKt4lBVR3DPfhBrGWEABeD7zK+UO/Q==
+  dependencies:
+    css-es-modules "1.0.2"
+    md5 "^2.3.0"
+    postcss-modules "^4.0.0"
+    tslib "^2.1.0"
 
 postcss-load-config@^3.0.0, postcss-load-config@^3.0.1:
   version "3.0.1"

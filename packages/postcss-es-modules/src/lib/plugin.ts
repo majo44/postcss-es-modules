@@ -1,5 +1,5 @@
 import { isAbsolute } from 'path';
-import postcss, { Plugin, Result, Root } from 'postcss';
+import postcss, { Plugin } from 'postcss';
 import { eject } from './eject';
 import { defaultOptions, Options } from './options';
 import { createStringify } from './stringify';
@@ -23,7 +23,7 @@ export const plugin = (options: Options = {}): Plugin => {
     // return plugin body
     return {
         postcssPlugin: 'postcss-es-modules',
-        Once: async (css, { result }) => {
+        OnceExit: async (css, { result }) => {
             // validate options
             if (options.inject?.script === 'eject' && !ejected) {
                 ejected = true;

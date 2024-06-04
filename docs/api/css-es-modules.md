@@ -9,7 +9,7 @@
 |  Function | Description |
 |  --- | --- |
 |  [collectStyles()](./css-es-modules.collectstyles.md) | Start collecting of styles. |
-|  [injectStyles(stylesheetKey, stylesheetBody, options, serverSide)](./css-es-modules.injectstyles.md) | Inject stylesheet to global on node or to the document DOM on the browser |
+|  [injectStyles(stylesheetKey, stylesheetBody, options, serverSide, shadowRoot)](./css-es-modules.injectstyles.md) | Inject stylesheet to global on node or to the document DOM on the browser |
 
 ## Interfaces
 

@@ -4,9 +4,9 @@ function getResolvedClassName(classMap: Record<string, string>, className: strin
     return `${classMap[className]}${attachOriginalClassName ? ` ${className}` : ''}`;
 }
 
-function getInjectStatement(injectStatement: string | undefined, hasRuntimeOptions: boolean) {
+function getInjectStatement(injectStatement: string | undefined, hasRuntimeOptions: boolean, shadowRoot: boolean) {
     if (injectStatement === undefined) {
-        injectStatement = `injectStyles(key, css${hasRuntimeOptions ? ', options' : ''});`;
+        injectStatement = `injectStyles(key, css, ${hasRuntimeOptions ? 'options' : 'undefined'}, undefined, ${shadowRoot ? 'shadowRoot' : 'undefined'});`;
     } else {
         injectStatement += ';';
     }
@@ -24,16 +24,19 @@ export const buildLazyStylesStatement = (
     attachOriginalClassName: boolean,
     hasRuntimeOptions: boolean): void => {
 
-    injectStatement = getInjectStatement(injectStatement, hasRuntimeOptions);
+    const injectStatement1 = getInjectStatement(injectStatement, hasRuntimeOptions, false);
 
     builder(`const styles = {\n`, node);
     // styles class names map
     Object.keys(classMap).forEach((className) => {
-        builder(`    get ['${className}']() { ${injectStatement} `
+        builder(`    get ['${className}']() { ${injectStatement1} `
             + ` return '${getResolvedClassName(classMap, className, attachOriginalClassName)}'; },\n`, node);
     });
+
+    const injectStatement2 = getInjectStatement(injectStatement, hasRuntimeOptions, true);
+
     // inject method
-    builder(`    inject() { ${injectStatement} }\n`, node);
+    builder(`    inject(shadowRoot) { ${injectStatement2} }\n`, node);
     builder(`};\n`, node);
 
 };
@@ -49,7 +52,7 @@ export const buildOnDemandStylesStatement = (
     attachOriginalClassName: boolean,
     hasRuntimeOptions: boolean): void => {
 
-    injectStatement = getInjectStatement(injectStatement, hasRuntimeOptions);
+    injectStatement = getInjectStatement(injectStatement, hasRuntimeOptions, true);
 
     builder(`const styles = {\n`, node);
     // styles class names map
@@ -57,7 +60,7 @@ export const buildOnDemandStylesStatement = (
         builder(`    ['${className}']: '${getResolvedClassName(classMap, className, attachOriginalClassName)}',\n`, node);
     });
     // inject method
-    builder(`    inject() { ${injectStatement} }\n`, node);
+    builder(`    inject(shadowRoot) { ${injectStatement} }\n`, node);
     builder(`};\n`, node);
 
 };

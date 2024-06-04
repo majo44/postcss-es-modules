@@ -253,6 +253,7 @@ export default styles;
 
 #### On demand
 This mode gives possibility to call the styles.inject() method for manual on demand styles injection.
+This mode should be used in case when you wants to use Shardow DOM.
 ```javascript
 import { injectStyles } from 'css-es-modules';
 const key = 'e1ph4XxYADCPaqpZhcgqRT';
@@ -262,11 +263,14 @@ const css =`._title_6jm2u_1 {
 `;
 const styles = {
     ['title']: '_title_6jm2u_1',
-    inject() { injectStyles(key, css); }
+    inject(shadowRoot) { injectStyles(key, css, undefined, shadowRoot); }
 };
 export { styles, css, key };
 export default styles;
 ```
+As you see the generated inject function accept optional `shadowRoot` parameter, 
+by that within your WebComponent you will be able to inject styles into shadowRoot. 
+
 #### Instant
 This mode is calls the styles.inject() method internally.
 ```javascript

@@ -1,6 +1,6 @@
 {
     "name": "postcss-node",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "description": "Package which allows import of css/scss/lass/.. files under the node.js eg `require('styles.css')`",
     "keywords": [
         "css-in-js",
