@@ -8,9 +8,9 @@ import { defaultOptions, ExtendedStylesInjectOptions } from '../options';
 const buildImportStatement = (
     node: Root, builder: Builder, from: string, item: string, module: 'esm' | 'cjs' = defaultOptions.inject.moduleType) => {
     if (module === 'cjs') {
-        builder(`const { injectStyles } = require('${from}');\n`, node);
+        builder(`const { injectStyles } = require('${from}');\n`);
     } else {
-        builder(`import { ${item} } from '${from}';\n`, node);
+        builder(`import { ${item} } from '${from}';\n`);
     }
 };
 

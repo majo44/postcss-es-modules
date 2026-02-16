@@ -51,7 +51,7 @@ export const plugin = (options: Options = {}): Plugin => {
                     // so we are adding the comment with modules map
                     css.append(postcss.comment({text: 'modules-map:' + JSON.stringify(map)}));
                 }
-            })).process(css, {from: result.opts.from});
+            })).process(css, {from: result.opts.from, map: false});
         }
     };
 };

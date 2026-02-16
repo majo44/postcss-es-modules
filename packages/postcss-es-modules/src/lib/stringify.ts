@@ -54,12 +54,12 @@ export const createStringify = (options: Required<Options>): Stringifier => {
                             embedCode = readCodeForEmbed(scriptType, moduleType);
                         }
                         // print in the injector code
-                        builder(embedCode, node);
+                        builder(embedCode);
                     } else {
                         // import statement
                         if (importStatement) {
                             // if there is custom importStatement, we will use it
-                            builder(importStatement, cloned)
+                            builder(importStatement)
                         } else {
                             // if not embedding, we will import the css-es-modules lib
                             buildImportInjectStylesStatement(cloned, builder, options.inject);
@@ -74,12 +74,12 @@ export const createStringify = (options: Required<Options>): Stringifier => {
                 }
 
                 // key of stylesheet
-                builder(`const key = '${sheetKey}';\n`, cloned);
+                builder(`const key = '${sheetKey}';\n`);
 
                 // raw css body
-                builder('const css =`', cloned);
+                builder('const css =`');
                 postcss.stringify(cloned, builder);
-                builder('`;\n', cloned);
+                builder('`;\n');
 
                 // styles object
                 if (options.inject.injectMode === 'instant') {
@@ -100,10 +100,10 @@ export const createStringify = (options: Required<Options>): Stringifier => {
 
                 // export statement
                 if (moduleType === 'esm') {
-                    builder(`export { styles, css, key };\n`, cloned);
-                    builder(`export default styles;\n`, cloned);
+                    builder(`export { styles, css, key };\n`);
+                    builder(`export default styles;\n`);
                 } else {
-                    builder(`module.exports = { styles, css, key, default: styles };\n`, cloned);
+                    builder(`module.exports = { styles, css, key, default: styles };\n`);
                 }
 
                 return;
