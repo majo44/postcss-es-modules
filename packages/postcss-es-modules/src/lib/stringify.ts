@@ -59,7 +59,7 @@ export const createStringify = (options: Required<Options>): Stringifier => {
                         // import statement
                         if (importStatement) {
                             // if there is custom importStatement, we will use it
-                            builder(importStatement, node);
+                            builder(importStatement, cloned);
                         } else {
                             // if not embedding, we will import the css-es-modules lib
                             buildImportInjectStylesStatement(cloned, builder, options.inject);
@@ -78,7 +78,7 @@ export const createStringify = (options: Required<Options>): Stringifier => {
                 builder("\n");
 
                 // raw css body
-                builder('const css =`');
+                builder('const css =`', cloned);
                 postcss.stringify(cloned, builder);
                 builder('`;', cloned);
                 builder("\n");
