@@ -36,7 +36,7 @@
         "compile:esm": "tsc --outDir dist/dist-esm --module ESNext",
         "lint": "eslint ./src/**/*.ts --fix",
         "prepublishOnly": "yarn build",
-        "test": "mocha src/**/*.ts",
+        "test": "mocha ./src/**/*.spec.ts ./src/**/**/*.spec.ts",
         "test:coverage": "nyc yarn test",
         "test:watch": "yarn test --watch"
     },
