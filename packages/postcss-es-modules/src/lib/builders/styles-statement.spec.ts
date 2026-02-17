@@ -18,8 +18,8 @@ describe('styles-statement', () => {
         const node: any = {}
         buildLazyStylesStatement(builder, node, classMap, undefined, false, false);
         expect(result).eq('const styles = {\n' +
-            '    get [\'a\']() { injectStyles(key, css);  return \'b\'; },\n' +
-            '    inject() { injectStyles(key, css); }\n' +
+            '    get [\'a\']() { injectStyles(key, css, undefined, undefined, undefined);  return \'b\'; },\n' +
+            '    inject(shadowRoot) { injectStyles(key, css, undefined, undefined, shadowRoot); }\n' +
             '};\n');
     });
     it('should generate lazy statement with options', () => {
@@ -28,8 +28,8 @@ describe('styles-statement', () => {
         const node: any = {}
         buildLazyStylesStatement(builder, node, classMap, undefined, false, true);
         expect(result).eq('const styles = {\n' +
-            '    get [\'a\']() { injectStyles(key, css, options);  return \'b\'; },\n' +
-            '    inject() { injectStyles(key, css, options); }\n' +
+            '    get [\'a\']() { injectStyles(key, css, options, undefined, undefined);  return \'b\'; },\n' +
+            '    inject(shadowRoot) { injectStyles(key, css, options, undefined, shadowRoot); }\n' +
         '};\n');
     });
 
@@ -39,8 +39,8 @@ describe('styles-statement', () => {
         const node: any = {}
         buildLazyStylesStatement(builder, node, classMap, undefined, true, false);
         expect(result).eq('const styles = {\n' +
-            '    get [\'a\']() { injectStyles(key, css);  return \'b a\'; },\n' +
-            '    inject() { injectStyles(key, css); }\n' +
+            '    get [\'a\']() { injectStyles(key, css, undefined, undefined, undefined);  return \'b a\'; },\n' +
+            '    inject(shadowRoot) { injectStyles(key, css, undefined, undefined, shadowRoot); }\n' +
             '};\n');
     });
     it('should generate lazy statement with custom inject statement', () => {
@@ -50,7 +50,7 @@ describe('styles-statement', () => {
         buildLazyStylesStatement(builder, node, classMap, 'myInjector(css, key)', false, false);
         expect(result).eq('const styles = {\n' +
             '    get [\'a\']() { myInjector(css, key);  return \'b\'; },\n' +
-            '    inject() { myInjector(css, key); }\n' +
+            '    inject(shadowRoot) { myInjector(css, key); }\n' +
             '};\n');
     });
     it('should generate on demand statement', () => {
@@ -60,7 +60,7 @@ describe('styles-statement', () => {
         buildOnDemandStylesStatement(builder, node, classMap, undefined, false, false);
         expect(result).eq('const styles = {\n' +
             '    [\'a\']: \'b\',\n' +
-            '    inject(shadowRoot) { injectStyles(key, css, undefined, shadowRoot); }\n' +
+            '    inject(shadowRoot) { injectStyles(key, css, undefined, undefined, shadowRoot); }\n' +
             '};\n');
     });
     it('should generate on demand statement with custom inject statement', () => {
@@ -80,7 +80,7 @@ describe('styles-statement', () => {
         buildInstantStylesStatement(builder, node, classMap, undefined, false, false);
         expect(result).eq('const styles = {\n' +
             '    [\'a\']: \'b\',\n' +
-            '    inject(shadowRoot) { injectStyles(key, css, undefined, shadowRoot); }\n' +
+            '    inject(shadowRoot) { injectStyles(key, css, undefined, undefined, shadowRoot); }\n' +
             '};\n' +
             'styles.inject();\n');
     });

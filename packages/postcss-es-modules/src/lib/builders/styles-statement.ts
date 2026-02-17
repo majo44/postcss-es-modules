@@ -26,18 +26,22 @@ export const buildLazyStylesStatement = (
 
     const injectStatement1 = getInjectStatement(injectStatement, hasRuntimeOptions, false);
 
-    builder(`const styles = {\n`, node);
+    builder(`const styles = {`, node);
+    builder("\n");
     // styles class names map
     Object.keys(classMap).forEach((className) => {
         builder(`    get ['${className}']() { ${injectStatement1} `
-            + ` return '${getResolvedClassName(classMap, className, attachOriginalClassName)}'; },\n`, node);
+            + ` return '${getResolvedClassName(classMap, className, attachOriginalClassName)}'; },`, node);
+        builder("\n");
     });
 
     const injectStatement2 = getInjectStatement(injectStatement, hasRuntimeOptions, true);
 
     // inject method
-    builder(`    inject(shadowRoot) { ${injectStatement2} }\n`, node);
-    builder(`};\n`, node);
+    builder(`    inject(shadowRoot) { ${injectStatement2} }`, node);
+    builder("\n");
+    builder(`};`, node);
+    builder("\n");
 
 };
 
@@ -54,14 +58,19 @@ export const buildOnDemandStylesStatement = (
 
     injectStatement = getInjectStatement(injectStatement, hasRuntimeOptions, true);
 
-    builder(`const styles = {\n`, node);
+    builder(`const styles = {`, node);
+    builder("\n");
     // styles class names map
     Object.keys(classMap).forEach((className) => {
-        builder(`    ['${className}']: '${getResolvedClassName(classMap, className, attachOriginalClassName)}',\n`, node);
+        builder(`    ['${className}']: '${getResolvedClassName(classMap, className, attachOriginalClassName)}',`, node);
+        builder("\n");
     });
+
     // inject method
-    builder(`    inject(shadowRoot) { ${injectStatement} }\n`, node);
-    builder(`};\n`, node);
+    builder(`    inject(shadowRoot) { ${injectStatement} }`, node);
+    builder("\n");
+    builder(`};`, node);
+    builder("\n");
 
 };
 
@@ -78,6 +87,7 @@ export const buildInstantStylesStatement = (
 
     buildOnDemandStylesStatement(
         builder, node, classMap, injectStatement, attachOriginalClassName, hasRuntimeOptions);
-    builder(`styles.inject();\n`, node);
+    builder(`styles.inject();`, node);
+    builder("\n");
 
 };
